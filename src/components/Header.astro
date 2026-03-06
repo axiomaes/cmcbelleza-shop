@@ -5,34 +5,48 @@
 <header class="sticky top-4 z-50 mx-auto w-[95%] max-w-screen-2xl rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm transition-all duration-300">
   <div class="px-6 py-4">
     <div class="flex justify-between items-center relative">
-      
+
       <div class="shrink-0 flex items-center">
         <a href="/" class="text-2xl md:text-3xl font-bold text-dark tracking-tight">
           CMC <span class="text-primary">Belleza</span>
         </a>
       </div>
-      
+
       <nav class="hidden md:flex items-center space-x-6 group">
-        <a href="/" class="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">
-          Inicio
-        </a>
-        <a href="#" class="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">
-          Categorías
-        </a>
-        <a href="#" class="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">
-          Contacto
-        </a>
+        <a href="/" class="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Inicio</a>
+        <a href="/tienda" class="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Tienda</a>
+        <a href="#" class="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Contacto</a>
       </nav>
 
-      <div class="flex items-center space-x-4">
-        <button class="bg-dark text-white p-2.5 rounded-full hover:bg-primary hover:scale-105 transition-all duration-300 shadow-md" aria-label="Ver carrito">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-center space-x-4 relative">
+        <button id="cart-btn" class="relative bg-dark text-white p-2.5 rounded-full hover:bg-primary hover:scale-105 transition-all duration-300 shadow-md" aria-label="Ver carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
+          <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-secondary text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white pointer-events-none">0</span>
         </button>
 
+        <div id="mini-cart-dropdown" class="hidden absolute top-full right-0 mt-4 w-80 sm:w-96 bg-white/95 backdrop-blur-xl border border-white/50 rounded-2xl shadow-2xl origin-top-right transition-all duration-300 overflow-hidden">
+          <div class="p-4 border-b border-gray-100">
+            <h3 class="text-lg font-bold text-dark">Tu Carrito</h3>
+          </div>
+
+          <div id="mini-cart-items" class="max-h-60 overflow-y-auto p-4 space-y-4">
+          </div>
+
+          <div class="p-4 bg-gray-50 border-t border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-dark font-medium">Subtotal:</span>
+              <span id="mini-cart-total" class="text-xl font-bold text-secondary">0.00 €</span>
+            </div>
+            <a href="/carrito" class="block w-full text-center bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-hover hover:scale-105 transition-all duration-300">
+              Ver carrito detallado
+            </a>
+          </div>
+        </div>
+
         <button id="mobile-menu-btn" class="md:hidden text-dark p-2 focus:outline-none hover:text-primary transition-colors" aria-label="Abrir menú">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
@@ -40,7 +54,7 @@
 
       <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-4 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-xl md:hidden overflow-hidden transition-all duration-300 origin-top">
         <a href="/" class="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary border-b border-gray-100 transition-colors">Inicio</a>
-        <a href="#" class="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary border-b border-gray-100 transition-colors">Categorías</a>
+        <a href="/tienda" class="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary border-b border-gray-100 transition-colors">Tienda</a>
         <a href="#" class="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary transition-colors">Contacto</a>
       </div>
 
@@ -49,12 +63,67 @@
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
+  import { cartStore } from '../store/cart.js';
 
-  if (btn && menu) {
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
+  // Menú móvil
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  }
+
+  // Toggle del Mini-carrito
+  const cartBtn = document.getElementById('cart-btn');
+  const miniCart = document.getElementById('mini-cart-dropdown');
+  if (cartBtn && miniCart) {
+    cartBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita que se cierre instantáneamente
+      miniCart.classList.toggle('hidden');
+    });
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!miniCart.contains(e.target) && e.target !== cartBtn) {
+        miniCart.classList.add('hidden');
+      }
     });
   }
+
+  // Reactividad del Carrito
+  const badge = document.getElementById('cart-badge');
+  const itemsContainer = document.getElementById('mini-cart-items');
+  const totalDisplay = document.getElementById('mini-cart-total');
+
+  cartStore.subscribe(cart => {
+    // 1. Actualizar Badge
+    if (badge) {
+      badge.textContent = cart.itemCount.toString();
+      cart.itemCount > 0 ? badge.classList.remove('hidden') : badge.classList.add('hidden');
+    }
+
+    // 2. Actualizar Total
+    if (totalDisplay) {
+      totalDisplay.textContent = `${cart.totals.total} €`;
+    }
+
+    // 3. Renderizar Lista de Productos
+    if (itemsContainer) {
+      if (cart.items.length === 0) {
+        itemsContainer.innerHTML = `<p class="text-dark-muted text-sm text-center py-4">Tu carrito está vacío</p>`;
+        return;
+      }
+
+      itemsContainer.innerHTML = cart.items.map(item => `
+        <div class="flex justify-between items-center border-b border-gray-50 pb-2">
+          <div class="flex-1 pr-4">
+            <h4 class="text-sm font-semibold text-dark line-clamp-1">${item.name}</h4>
+            <p class="text-xs text-dark-muted">Cant: ${item.quantity} x ${item.price} €</p>
+          </div>
+          <div class="font-bold text-secondary text-sm">
+            ${(parseFloat(item.price) * item.quantity).toFixed(2)} €
+          </div>
+        </div>
+      `).join('');
+    }
+  });
 </script>

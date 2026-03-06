@@ -1,0 +1,170 @@
+---
+// src/pages/tienda.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { getProducts } from "../lib/woocommerce.js";
+
+// 1. Obtenemos todos los productos
+const products = await getProducts();
+
+// 2. Extraemos las categorías únicas para el selector dinámico
+const categories = products.reduce((acc: any[], product: any) => {
+    if (product.categories && Array.isArray(product.categories)) {
+        product.categories.forEach((cat: any) => {
+            if (!acc.some(c => c.id === cat.id)) acc.push(cat);
+        });
+    }
+    return acc;
+}, []);
+
+// 3. Calculamos el precio máximo para el slider
+const maxPrice = products.length > 0
+    ? Math.ceil(Math.max(...products.map((p: any) => parseFloat(p.price || 0))))
+    : 1000;
+---
+
+<BaseLayout title="Tienda - CMC Belleza">
+    <section class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-dark mb-6">
+            Catálogo <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-hover">Completo</span>
+        </h1>
+        <p class="text-xl text-dark-muted max-w-2xl mx-auto font-medium">
+            Encuentra exactamente lo que necesitas para tu salón.
+        </p>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row gap-10">
+
+        <aside class="w-full lg:w-1/4 shrink-0">
+            <div class="bg-white/70 backdrop-blur-md p-6 rounded-3xl shadow-sm border border-white/60 sticky top-28">
+                <h2 class="text-xl font-bold text-dark mb-6 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                    </svg>
+                    Filtros
+                </h2>
+
+                <div class="mb-6">
+                    <label for="search" class="block text-sm font-semibold text-dark-muted mb-2">Buscar producto</label>
+                    <input type="text" id="search" placeholder="Ej. Serum facial..." class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white/50" />
+                </div>
+
+                <div class="mb-6">
+                    <label for="category" class="block text-sm font-semibold text-dark-muted mb-2">Categoría</label>
+                    <select id="category" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white/50 appearance-none">
+                        <option value="all">Todas las categorías</option>
+                        {categories.map((cat: any) => (
+                                <option value={cat.id}>{cat.name}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label for="price" class="flex justify-between text-sm font-semibold text-dark-muted mb-2">
+                        <span>Precio máximo</span>
+                        <span id="price-display" class="text-secondary font-bold">{maxPrice} €</span>
+                    </label>
+                    <input type="range" id="price" min="0" max={maxPrice} value={maxPrice} class="w-full accent-primary" />
+                </div>
+
+                <button id="reset-filters" class="w-full py-3 text-sm font-bold text-dark-muted hover:text-dark hover:bg-gray-100 rounded-xl transition-colors">
+                    Limpiar filtros
+                </button>
+            </div>
+        </aside>
+
+        <div class="w-full lg:w-3/4">
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {products.map((product: any) => {
+                    // Extraemos los IDs de las categorías para inyectarlos en el HTML
+          const catIds = product.categories ? product.categories.map((c: any) => c.id).join(',') : '';
+
+                    return (
+                        /* Inyectamos los datos de filtrado en atributos data-* */
+                            <div
+                                    class="product-item transition-all duration-300"
+                                    data-name={product.name.toLowerCase()}
+                                    data-price={product.price || 0}
+                                    data-categories={catIds}
+                            >
+                                <ProductCard product={product} />
+                            </div>
+                    );
+                })}
+            </div>
+
+            <div id="no-results" class="hidden text-center py-20">
+                <p class="text-2xl font-bold text-dark mb-2">No se encontraron productos</p>
+                <p class="text-dark-muted">Intenta ajustar los filtros de búsqueda.</p>
+            </div>
+        </div>
+
+    </main>
+</BaseLayout>
+
+<script>
+    // Lógica reactiva de filtrado en el cliente
+    const searchInput = document.getElementById('search') as HTMLInputElement;
+    const categorySelect = document.getElementById('category') as HTMLSelectElement;
+    const priceInput = document.getElementById('price') as HTMLInputElement;
+    const priceDisplay = document.getElementById('price-display');
+    const resetBtn = document.getElementById('reset-filters');
+    const products = document.querySelectorAll('.product-item');
+    const noResults = document.getElementById('no-results');
+
+    function filterProducts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategory = categorySelect.value;
+        const maxPrice = parseFloat(priceInput.value);
+
+        // Actualizar texto del precio
+        if (priceDisplay) priceDisplay.textContent = `${maxPrice} €`;
+
+        let visibleCount = 0;
+
+        products.forEach((node) => {
+            const el = node as HTMLElement;
+            const name = el.dataset.name || '';
+            const price = parseFloat(el.dataset.price || '0');
+            const categories = el.dataset.categories || '';
+
+            const matchesSearch = name.includes(searchTerm);
+            const matchesCategory = selectedCategory === 'all' || categories.split(',').includes(selectedCategory);
+            const matchesPrice = price <= maxPrice;
+
+            if (matchesSearch && matchesCategory && matchesPrice) {
+                el.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                el.classList.add('hidden');
+            }
+        });
+
+        // Control del mensaje de "Sin resultados"
+        if (noResults) {
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+    }
+
+    // Event Listeners
+    if (searchInput) searchInput.addEventListener('input', filterProducts);
+    if (categorySelect) categorySelect.addEventListener('change', filterProducts);
+    if (priceInput) priceInput.addEventListener('input', filterProducts);
+
+    // Lógica de reset
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            if (categorySelect) categorySelect.value = 'all';
+            if (priceInput) {
+                priceInput.value = priceInput.max;
+                if (priceDisplay) priceDisplay.textContent = `${priceInput.max} €`;
+            }
+            filterProducts();
+        });
+    }
+</script>

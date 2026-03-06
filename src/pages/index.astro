@@ -4,7 +4,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ProductCard from "../components/ProductCard.astro";
 import { getProducts } from "../lib/woocommerce.js";
 
-const products = await getProducts();
+const allProducts = await getProducts();
+const randomProducts = [...allProducts].sort(() => 0.5 - Math.random()).slice(0, 6);
+
+// Técnica de ilusión infinita: Triplicamos el array en el servidor
+const infiniteSlider = [...randomProducts, ...randomProducts, ...randomProducts];
 ---
 
 <BaseLayout title="Inicio - CMC Belleza">
@@ -15,23 +19,96 @@ const products = await getProducts();
     <p class="text-xl text-dark-muted mb-10 max-w-2xl mx-auto font-medium">
       Descubre nuestra selección exclusiva de productos y equipamiento de alta calidad.
     </p>
-    <a href="#catalogo" class="inline-block bg-dark text-white font-semibold px-8 py-4 rounded-full hover:bg-primary hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300">
-      Explorar Catálogo
+    <a href="/tienda" class="inline-block bg-dark text-white font-semibold px-8 py-4 rounded-full hover:bg-primary hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300">
+      Explorar Catálogo Completo
     </a>
   </section>
 
-  <main id="catalogo" class="max-w-7xl mx-auto p-4 md:p-8">
+  <main class="max-w-7xl mx-auto p-4 md:p-8 overflow-hidden">
     <div class="flex items-center justify-between mb-10">
       <h2 class="text-3xl font-bold text-dark relative inline-block">
-        Catálogo Destacado
+        Destacados del momento
         <span class="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-primary rounded-full"></span>
       </h2>
+
+      <div class="flex space-x-2">
+        <button id="slider-prev" class="p-2 rounded-full bg-white border border-gray-200 text-dark hover:bg-primary hover:text-white hover:border-primary transition-colors shadow-sm" aria-label="Anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <button id="slider-next" class="p-2 rounded-full bg-white border border-gray-200 text-dark hover:bg-primary hover:text-white hover:border-primary transition-colors shadow-sm" aria-label="Siguiente">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
     </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {products.map((product: any) => (
-        <ProductCard product={product} />
+
+    <div id="product-slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 hide-scrollbar transition-all">
+      {infiniteSlider.map((product: any) => (
+          <div class="snap-start shrink-0 w-[85%] sm:w-[45%] md:w-[30%] lg:w-[23%] slider-item">
+            <ProductCard product={product} />
+          </div>
       ))}
     </div>
   </main>
 </BaseLayout>
+
+<style>
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<script>
+  const slider = document.getElementById('product-slider');
+  const btnPrev = document.getElementById('slider-prev');
+  const btnNext = document.getElementById('slider-next');
+
+  if (slider && btnPrev && btnNext) {
+    // Inicialización: Forzamos scroll-smooth desde JS para poder quitarlo a voluntad
+    slider.classList.add('scroll-smooth');
+
+    const getMetrics = () => {
+      const firstChild = slider.querySelector('.slider-item') as HTMLElement;
+      const itemWidth = firstChild ? firstChild.offsetWidth + 24 : 0; // ancho + gap de 1.5rem (24px)
+      const setWidth = itemWidth * 6; // 6 es la cantidad original de productos
+      return { itemWidth, setWidth };
+    };
+
+    // 1. Posicionar silenciosamente en el Set 2 (centro) al cargar
+    setTimeout(() => {
+      slider.classList.remove('scroll-smooth');
+      slider.scrollLeft = getMetrics().setWidth;
+      // Pequeño timeout para que el navegador aplique el salto sin animación antes de restaurar
+      requestAnimationFrame(() => {
+        slider.classList.add('scroll-smooth');
+      });
+    }, 100);
+
+    // 2. Control de botones
+    btnPrev.addEventListener('click', () => {
+      slider.scrollBy({ left: -getMetrics().itemWidth, behavior: 'smooth' });
+    });
+
+    btnNext.addEventListener('click', () => {
+      slider.scrollBy({ left: getMetrics().itemWidth, behavior: 'smooth' });
+    });
+
+    // 3. Teletransporte silencioso al llegar a los extremos
+    // El evento 'scrollend' se dispara cuando la animación de desplazamiento ha terminado
+    slider.addEventListener('scrollend', () => {
+      const { setWidth } = getMetrics();
+
+      // Si estamos en el primer bloque (clones izquierdos)
+      if (slider.scrollLeft < setWidth - getMetrics().itemWidth) {
+        slider.classList.remove('scroll-smooth');
+        slider.scrollLeft += setWidth;
+        requestAnimationFrame(() => slider.classList.add('scroll-smooth'));
+      }
+
+      // Si estamos en el tercer bloque (clones derechos)
+      else if (slider.scrollLeft >= setWidth * 2) {
+        slider.classList.remove('scroll-smooth');
+        slider.scrollLeft -= setWidth;
+        requestAnimationFrame(() => slider.classList.add('scroll-smooth'));
+      }
+    });
+  }
+</script>

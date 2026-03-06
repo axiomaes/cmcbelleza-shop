@@ -2,31 +2,61 @@
 // src/components/ProductCard.astro
 
 const { product } = Astro.props;
+
+// Preparamos solo los datos mínimos necesarios para el carrito para no saturar el DOM
+const cartPayload = {
+  id: product.id,
+  name: product.name,
+  price: product.price
+};
 ---
 
 <article class="group bg-white/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-white/60 flex flex-col h-full relative">
-  
+
   <a href={`/producto/${product.id}`} class="absolute inset-0 z-10" aria-label={`Ver detalles de ${product.name}`}></a>
 
   <div class="overflow-hidden rounded-xl mb-4 relative bg-white pointer-events-none z-0">
     {product.images && product.images.length > 0 ? (
-      <img 
-        src={product.images[0].src} 
-        alt={product.name} 
-        class="w-full h-56 object-contain transform group-hover:scale-105 transition-transform duration-500"
-      />
+        <img
+            src={product.images[0].src}
+            alt={product.name}
+            class="w-full h-56 object-contain transform group-hover:scale-105 transition-transform duration-500"
+        />
     ) : (
-      <div class="w-full h-56 bg-gray-50 flex items-center justify-center">
-        <span class="text-sm text-dark-muted">Sin imagen</span>
-      </div>
+        <div class="w-full h-56 bg-gray-50 flex items-center justify-center">
+          <span class="text-sm text-dark-muted">Sin imagen</span>
+        </div>
     )}
   </div>
-  
+
   <h2 class="text-lg font-bold text-dark line-clamp-2 grow group-hover:text-primary transition-colors pointer-events-none z-0">{product.name}</h2>
-  
+
   <p class="text-2xl font-extrabold text-secondary mt-2 mb-4 pointer-events-none z-0">{product.price} €</p>
-  
-  <button class="relative z-20 w-full bg-dark text-white py-3 rounded-full font-semibold hover:bg-primary hover:shadow-md transition-all duration-300">
+
+  <button
+      class="add-to-cart-btn relative z-20 w-full bg-dark text-white py-3 rounded-full font-semibold hover:bg-primary hover:shadow-md transition-all duration-300"
+      data-product={JSON.stringify(cartPayload)}
+  >
     Añadir al carrito
   </button>
 </article>
+
+<script>
+  import { addProductToCart } from '../store/cart.js';
+
+  // Astro ejecuta este script una vez por página, seleccionamos todos los botones
+  const buttons = document.querySelectorAll('.add-to-cart-btn');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Previene que el clic active el enlace absoluto de la tarjeta
+      e.preventDefault();
+
+      // Leemos el payload serializado en el HTML y ejecutamos la función del store
+      if (btn instanceof HTMLElement && btn.dataset.product) {
+        const product = JSON.parse(btn.dataset.product);
+        addProductToCart(product);
+      }
+    });
+  });
+</script>
