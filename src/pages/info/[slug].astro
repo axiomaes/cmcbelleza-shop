@@ -1,0 +1,34 @@
+---
+// src/pages/info/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// getStaticPaths consulta la API nativa de WordPress en el build
+export async function getStaticPaths() {
+    try {
+        // Endpoint estándar de WordPress para obtener páginas (no productos)
+        const res = await fetch('https://cmcbelleza.shop/wp-json/wp/v2/pages');
+        const pages = await res.json();
+
+        // Generamos una ruta para cada página encontrada en el panel del cliente
+        return pages.map((page: any) => ({
+            params: { slug: page.slug }, // Ej: 'politica-de-privacidad'
+            props: { page }, // Pasamos los datos completos de la página
+        }));
+    } catch (error) {
+        console.error("Error al obtener las páginas de WordPress:", error);
+        return [];
+    }
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout title={`${page.title.rendered} - CMC Belleza`}>
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-[60vh]">
+        <div class="bg-white/80 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-sm border border-white/60">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-dark mb-10 border-b border-gray-100 pb-6" set:html={page.title.rendered}></h1>
+
+            <div class="prose prose-slate prose-lg max-w-none text-dark-muted" set:html={page.content.rendered}></div>
+        </div>
+    </main>
+</BaseLayout>
