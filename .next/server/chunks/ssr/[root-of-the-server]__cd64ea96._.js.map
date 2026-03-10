@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../../src/app/%28shop%29/info/%5Bslug%5D/page.tsx"],"sourcesContent":["export default function Page() { return null; }"],"names":[],"mappings":"qUAAe,SAAS,IAAS,OAAO,IAAM"}
