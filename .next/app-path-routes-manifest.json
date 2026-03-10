@@ -1,0 +1,10 @@
+{
+  "/(shop)/carrito/page": "/carrito",
+  "/(shop)/info/[slug]/page": "/info/[slug]",
+  "/(shop)/producto/[slug]/page": "/producto/[slug]",
+  "/(shop)/tienda/page": "/tienda",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/checkout/route": "/api/checkout",
+  "/page": "/"
+}

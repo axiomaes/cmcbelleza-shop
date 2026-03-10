@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(shop)/layout,_N_T_/(shop)/producto/layout,_N_T_/(shop)/producto/[slug]/layout,_N_T_/(shop)/producto/[slug]/page,_N_T_/producto/moisturising-body-cream-body-care-juvena"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHNob3Ap/producto/$d$slug/__PAGE__",
+    "/!KHNob3Ap/producto/$d$slug",
+    "/!KHNob3Ap/producto",
+    "/!KHNob3Ap",
+    "/_index",
+    "/_head"
+  ]
+}

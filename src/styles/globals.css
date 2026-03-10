@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colores de énfasis */
+  --color-primary: #D4A32C;
+  --color-primary-hover: #B8870B;
+  --color-secondary: #2E6B3A;
+  
+  /* Colores de contraste (Textos y fondos oscuros) */
+  --color-dark: #2C2C2C;
+  --color-dark-muted: #4A5568;
+
+  /* Colores base (Fondos) */
+  --color-base: #F5F2EB;
+  --color-white: #FFFFFF;
+  
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-base text-dark font-sans;
+  }
+}
