@@ -91,7 +91,7 @@ export default async function Home() {
       </section>
 
       {/* Featured Products Slider */}
-      <section id="product-slider" className="max-w-7xl mx-auto w-full p-4 md:p-8 overflow-hidden mb-20 scroll-mt-24">
+      <section id="product-slider" className="max-w-7xl mx-auto w-full p-4 md:p-8 overflow-visible mb-20 scroll-mt-24">
         <ProductSlider products={featuredProducts} />
       </section>
     </div>
