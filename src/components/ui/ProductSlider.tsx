@@ -24,7 +24,7 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
   };
 
   return (
-    <div className="relative group min-h-[320px]">
+    <div className="relative group">
       <div className="flex items-center justify-between mb-10">
         <h2 className="text-3xl font-bold text-dark relative inline-block">
           Destacados del momento
@@ -51,11 +51,11 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
 
       <div 
         ref={sliderRef}
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth hide-scrollbar"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+        className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-12 scroll-smooth hide-scrollbar transition-all"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {products.map((product) => (
-          <div key={product.id} className="snap-start flex-shrink-0 w-[220px] sm:w-[260px] md:w-[300px] min-h-[380px]">
+          <div key={product.id} className="snap-start shrink-0 w-[85%] sm:w-[45%] md:w-[30%] lg:w-[23%]">
             <ProductCard product={product} />
           </div>
         ))}
