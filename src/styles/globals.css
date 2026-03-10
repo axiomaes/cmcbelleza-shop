@@ -26,3 +26,84 @@
     @apply bg-base text-dark font-sans;
   }
 }
+
+.wp-content {
+  max-width: 48rem;
+  margin: 0 auto;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+/* Separador horizontal — convertirlo en espacio elegante */
+.wp-content hr {
+  border: none;
+  margin: 2rem 0 0.5rem 0;
+}
+
+/* Párrafo que viene DESPUÉS de un hr = título de sección */
+.wp-content hr + p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+/* Párrafos normales de contenido */
+.wp-content p {
+  margin-bottom: 0.75rem;
+  color: inherit;
+}
+
+/* Listas */
+.wp-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.wp-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.wp-content li {
+  margin-bottom: 0.375rem;
+  line-height: 1.75;
+}
+
+/* Negritas */
+.wp-content strong {
+  font-weight: 700;
+}
+
+/* Links */
+.wp-content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.wp-content a:hover {
+  opacity: 0.8;
+}
+
+/* Títulos reales si WordPress los usa en otros contenidos */
+.wp-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+  color: var(--color-primary);
+}
+
+.wp-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.75rem;
+  color: var(--color-primary);
+}
+
+.wp-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem;
+}

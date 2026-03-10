@@ -38,7 +38,7 @@ export default async function LegalPage({ params }: Props) {
           </header>
 
           <div 
-            className="prose prose-neutral prose-lg max-w-none text-neutral-700 prose-headings:text-neutral-900"
+            className="wp-content"
             dangerouslySetInnerHTML={{ __html: page.content.rendered }}
           />
         </div>
