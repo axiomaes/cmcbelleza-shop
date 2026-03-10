@@ -26,9 +26,9 @@ const { page } = Astro.props;
 <BaseLayout title={`${page.title.rendered} - CMC Belleza`}>
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-[60vh]">
         <div class="prose prose-slate prose-lg max-w-none text-dark-muted prose-headings:text-dark prose-a:text-primary" set:html={page.content.rendered}>
-            <h1 class="text-3xl md:text-5xl font-extrabold text-dark mb-10 border-b border-gray-100 pb-6" set:html={page.title.rendered}></h1>
+            <h1 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-dark mb-6 md:mb-10 border-b border-gray-100 pb-4 md:pb-6" set:html={page.title.rendered}></h1>
 
-            <div class="prose prose-slate prose-lg max-w-none text-dark-muted" set:html={page.content.rendered}></div>
+            <div class="prose prose-slate md:prose-lg max-w-none text-dark-muted prose-headings:text-dark prose-a:text-primary" set:html={page.content.rendered}></div>
         </div>
     </main>
 </BaseLayout>
