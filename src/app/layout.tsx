@@ -11,18 +11,21 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "CMC Belleza - Equipamiento Profesional Premium",
-    template: "%s | CMC Belleza",
+    template: '%s | CMC Belleza',
+    default: 'CMC Belleza — Productos Naturales y Belleza',
   },
-  description: "Herramientas y cosmética de élite para profesionales de la belleza. Resultados impecables desde el primer uso.",
-  openGraph: {
-    title: "CMC Belleza",
-    description: "Equipamiento Profesional Premium para Salones de Belleza",
-    url: "https://cmcbelleza.shop",
-    siteName: "CMC Belleza",
-    locale: "es_ES",
-    type: "website",
+  description: 'Descubre nuestra selección de cosméticos naturales, cremas, aceites y tratamientos para el cuidado diario.',
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180' },
+    ],
+    shortcut: '/favicon.ico',
   },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
