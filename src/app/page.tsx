@@ -16,7 +16,7 @@ export default async function Home() {
   } catch (error) {
     console.error("Home Page Fetch Error:", error);
   }
-  
+
   const featuredProducts = products.slice(0, 8);
 
   return (
@@ -24,7 +24,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <div className="w-full lg:w-1/2 text-center lg:text-left z-10 flex flex-col items-center lg:items-start animate-in fade-in slide-in-from-left-8 duration-700">
-          
+
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-6">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
             🌿 Productos 100% Naturales
