@@ -1,8 +1,42 @@
-import { Product, Category, OrderData, Order } from "@/types";
+import { Product, Category, OrderData, Order, BlogPost, WPPage } from "@/types";
 
 const WP_API_URL = process.env.WP_API_URL;
 const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY;
 const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
+
+/**
+ * Base fetcher for WordPress REST API (core)
+ */
+async function wpFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  if (!WP_API_URL) {
+    throw new Error("Missing WP_API_URL in environment variables.");
+  }
+
+  const url = `${WP_API_URL}/wp/v2${endpoint}`;
+  
+  const defaultOptions: RequestInit = {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+    next: { revalidate: 3600, ...options.next },
+  };
+
+  try {
+    const response = await fetch(url, defaultOptions);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(`WordPress API Error: ${response.status} ${JSON.stringify(errorData)}`);
+    }
+
+    return (await response.json()) as T;
+  } catch (error) {
+    console.error(`Error fetching from WordPress (${endpoint}):`, error);
+    throw error;
+  }
+}
 
 /**
  * Base fetcher for WooCommerce REST API with Basic Auth
@@ -76,4 +110,31 @@ export async function createOrder(data: OrderData): Promise<Order> {
     body: JSON.stringify(data),
     next: { revalidate: 0 }, // Disable cache for orders
   });
+}
+
+// Posts del blog via WordPress REST API
+export async function fetchBlogPosts(params?: { per_page?: number; page?: number }): Promise<BlogPost[]> {
+  const searchParams = new URLSearchParams();
+  searchParams.append("_embed", "true");
+  if (params?.per_page) searchParams.append("per_page", params.per_page.toString());
+  if (params?.page) searchParams.append("page", params.page.toString());
+  
+  return wpFetch<BlogPost[]>(`/posts?${searchParams.toString()}`);
+}
+
+export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
+  const posts = await wpFetch<BlogPost[]>(`/posts?slug=${slug}&_embed`);
+  if (!posts || posts.length === 0) {
+    throw new Error(`Post not found with slug: ${slug}`);
+  }
+  return posts[0];
+}
+
+// Páginas legales via WordPress REST API  
+export async function fetchPageBySlug(slug: string): Promise<WPPage> {
+  const pages = await wpFetch<WPPage[]>(`/pages?slug=${slug}`);
+  if (!pages || pages.length === 0) {
+    throw new Error(`Page not found with slug: ${slug}`);
+  }
+  return pages[0];
 }

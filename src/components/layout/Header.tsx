@@ -45,6 +45,7 @@ const Header = () => {
           <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center space-x-6 group">
             <Link href="/" className="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Inicio</Link>
             <Link href="/tienda" className="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Tienda</Link>
+            <Link href="/blog" className="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Blog</Link>
             <Link href="#" className="px-5 py-2 rounded-full text-dark font-medium transition-all duration-300 group-hover:scale-95 group-hover:opacity-50 hover:scale-110! hover:opacity-100! hover:bg-primary/10 hover:text-primary">Contacto</Link>
           </nav>
 
@@ -78,6 +79,7 @@ const Header = () => {
             <div className="absolute top-full left-0 w-full mt-4 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-xl lg:hidden overflow-hidden transition-all duration-300 origin-top animate-in fade-in slide-in-from-top-4">
               <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary border-b border-gray-100 transition-colors">Inicio</Link>
               <Link href="/tienda" onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary border-b border-gray-100 transition-colors">Tienda</Link>
+              <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary border-b border-gray-100 transition-colors">Blog</Link>
               <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-dark font-medium hover:bg-primary/10 hover:text-primary transition-colors">Contacto</Link>
             </div>
           )}

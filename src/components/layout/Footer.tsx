@@ -35,9 +35,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-sm font-medium">
               <li><Link href="/info/aviso-legal" className="hover:text-primary transition-colors">Aviso Legal</Link></li>
-              <li><Link href="/info/politica-de-privacidad" className="hover:text-primary transition-colors">Política de Privacidad</Link></li>
-              <li><Link href="/info/politica-de-cookies" className="hover:text-primary transition-colors">Política de Cookies</Link></li>
-              <li><Link href="/info/terminos-y-condiciones" className="hover:text-primary transition-colors">Términos y Condiciones</Link></li>
+              <li><Link href="/info/politica-privacidad" className="hover:text-primary transition-colors">Política de Privacidad</Link></li>
+              <li><Link href="/info/politica-cookies" className="hover:text-primary transition-colors">Política de Cookies</Link></li>
+              <li><Link href="/info/terminos-condiciones" className="hover:text-primary transition-colors">Términos y Condiciones</Link></li>
             </ul>
           </div>
 
