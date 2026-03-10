@@ -5,6 +5,7 @@ const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY;
 const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
 
 function decodeHtmlEntities(text: string): string {
+  if (!text) return '';
   return text
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
@@ -96,9 +97,11 @@ export async function fetchProducts(params?: { category?: string; per_page?: num
   }
   
   const data = await wooFetch<Product[]>(`/products${query}`);
-  return data.map((product: Product) => ({
+  return data.map((product: any) => ({
     ...product,
     name: decodeHtmlEntities(product.name),
+    short_description: decodeHtmlEntities(product.short_description),
+    description: decodeHtmlEntities(product.description),
   }));
 }
 
@@ -107,9 +110,12 @@ export async function fetchProductBySlug(slug: string): Promise<Product> {
   if (!products || products.length === 0) {
     throw new Error(`Product not found with slug: ${slug}`);
   }
+  const product = products[0];
   return {
-    ...products[0],
-    name: decodeHtmlEntities(products[0].name),
+    ...product,
+    name: decodeHtmlEntities(product.name),
+    short_description: decodeHtmlEntities(product.short_description),
+    description: decodeHtmlEntities(product.description),
   };
 }
 

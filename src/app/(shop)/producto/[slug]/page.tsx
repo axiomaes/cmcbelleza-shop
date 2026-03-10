@@ -17,7 +17,7 @@ export const revalidate = 3600; // 1 hour
 
 function formatPrice(price: string): string {
   const num = parseFloat(price);
-  if (isNaN(num)) return price;
+  if (isNaN(num)) return price + ' €';
   return new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
