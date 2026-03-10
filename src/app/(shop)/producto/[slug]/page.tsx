@@ -6,6 +6,8 @@ import { fetchProductBySlug, fetchProducts } from '@/lib/woocommerce';
 import AddToCartButton from '@/components/ui/AddToCartButton';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 // En Next.js 15, params es una Promise
 interface Props {
   params: Promise<{ slug: string }>;

@@ -2,6 +2,7 @@ import { fetchProducts, fetchCategories } from '@/lib/woocommerce';
 import TiendaClient from '@/components/ui/TiendaClient';
 import { Product, Category } from '@/types';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 600; // 10 minutes
 
 export default async function TiendaPage() {

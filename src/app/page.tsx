@@ -6,6 +6,7 @@ import { CheckCircle2 } from 'lucide-react';
 import ProductSlider from '@/components/ui/ProductSlider';
 import { Product } from '@/types';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // 1 hour
 
 export default async function Home() {
