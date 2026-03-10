@@ -11,6 +11,15 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
+function formatPrice(price: string): string {
+  const num = parseFloat(price);
+  if (isNaN(num)) return price;
+  return new Intl.NumberFormat('es-ES', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(num) + ' €';
+}
+
 const ProductCard = ({ product, priority = false }: ProductCardProps) => {
   const { addItem, toggleCart } = useCart();
 
@@ -78,11 +87,11 @@ const ProductCard = ({ product, priority = false }: ProductCardProps) => {
         <div className="mt-auto pointer-events-none z-0">
           <div className="flex items-baseline gap-2 mb-4">
             <span className="text-2xl font-extrabold text-secondary">
-              {product.price} €
+              {formatPrice(product.price || '0')}
             </span>
             {hasDiscount && (
               <span className="text-sm text-dark-muted line-through opacity-50">
-                {product.regular_price} €
+                {formatPrice(product.regular_price || '0')}
               </span>
             )}
           </div>

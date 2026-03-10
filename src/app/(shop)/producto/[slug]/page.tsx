@@ -15,6 +15,15 @@ interface Props {
 
 export const revalidate = 3600; // 1 hour
 
+function formatPrice(price: string): string {
+  const num = parseFloat(price);
+  if (isNaN(num)) return price;
+  return new Intl.NumberFormat('es-ES', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(num) + ' €';
+}
+
 export async function generateStaticParams() {
   try {
     const products = await fetchProducts({ per_page: 20 });
@@ -100,11 +109,11 @@ export default async function ProductPage({ params }: Props) {
 
           <div className="flex items-center gap-4 mb-8">
             <p className="text-4xl font-black text-secondary">
-              {product.price} €
+              {formatPrice(product.price || '0')}
             </p>
             {product.sale_price && product.sale_price !== product.regular_price && (
               <span className="text-xl text-dark-muted line-through opacity-50 font-bold">
-                {product.regular_price} €
+                {formatPrice(product.regular_price || '0')}
               </span>
             )}
           </div>

@@ -4,6 +4,16 @@ const WP_API_URL = process.env.WP_API_URL;
 const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY;
 const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
 
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+}
+
 /**
  * Base fetcher for WordPress REST API (core)
  */
@@ -85,7 +95,11 @@ export async function fetchProducts(params?: { category?: string; per_page?: num
     query = `?${searchParams.toString()}`;
   }
   
-  return wooFetch<Product[]>(`/products${query}`);
+  const data = await wooFetch<Product[]>(`/products${query}`);
+  return data.map((product: Product) => ({
+    ...product,
+    name: decodeHtmlEntities(product.name),
+  }));
 }
 
 export async function fetchProductBySlug(slug: string): Promise<Product> {
@@ -93,7 +107,10 @@ export async function fetchProductBySlug(slug: string): Promise<Product> {
   if (!products || products.length === 0) {
     throw new Error(`Product not found with slug: ${slug}`);
   }
-  return products[0];
+  return {
+    ...products[0],
+    name: decodeHtmlEntities(products[0].name),
+  };
 }
 
 export async function fetchProductById(id: number): Promise<Product> {
