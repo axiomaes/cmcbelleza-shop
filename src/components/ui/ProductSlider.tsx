@@ -51,11 +51,11 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
 
       <div 
         ref={sliderRef}
-        className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-12 scroll-smooth hide-scrollbar transition-all"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth hide-scrollbar"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {products.map((product) => (
-          <div key={product.id} className="snap-start flex-shrink-0 w-[260px] sm:w-[280px] md:w-[300px]">
+          <div key={product.id} className="snap-start flex-shrink-0 w-[220px] sm:w-[260px] md:w-[300px] min-h-[380px]">
             <ProductCard product={product} />
           </div>
         ))}
