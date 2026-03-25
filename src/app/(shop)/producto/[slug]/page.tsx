@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { fetchProductBySlug, fetchProducts } from '@/lib/woocommerce';
 import AddToCartButton from '@/components/ui/AddToCartButton';
+import TextureSlider from '@/components/ui/TextureSlider';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -143,6 +144,14 @@ export default async function ProductPage({ params }: Props) {
           <p className="mt-6 text-xs text-dark-muted/60 italic">
             * Los precios incluyen IVA. Gastos de envío calculados en el checkout.
           </p>
+
+          {/* Texture Slider Interactive Module */}
+          {product.images?.[0] && (
+            <TextureSlider 
+              mainImage={product.images[0].src} 
+              textureImage={product.images[1]?.src || "https://images.unsplash.com/photo-1629323145455-d4fc3f5ee923?w=800&q=80"} 
+            />
+          )}
         </div>
       </div>
 

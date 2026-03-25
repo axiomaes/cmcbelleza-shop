@@ -6,6 +6,7 @@ import { CheckCircle2 } from 'lucide-react';
 import ProductSlider from '@/components/ui/ProductSlider';
 import FeaturedCarousel from '@/components/ui/FeaturedCarousel';
 import ComingSoonBanner from '@/components/ui/ComingSoonBanner';
+import ParallaxBackground from '@/components/ui/ParallaxBackground';
 import { Product } from '@/types';
 
 export const dynamic = 'force-dynamic';
@@ -27,6 +28,7 @@ export default async function Home() {
       
       {/* Hero Section */}
       <div className="relative">
+        <ParallaxBackground />
         <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <div className="w-full lg:w-1/2 text-center lg:text-left z-10 flex flex-col items-center lg:items-start animate-in fade-in slide-in-from-left-8 duration-700">
           
