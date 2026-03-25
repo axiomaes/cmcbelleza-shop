@@ -23,6 +23,8 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col w-full">
+      <ComingSoonBanner />
+      
       {/* Hero Section */}
       <div className="relative">
         <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
@@ -92,7 +94,6 @@ export default async function Home() {
           <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary/20 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
       </section>
-      <ComingSoonBanner />
       </div>
 
       <section className="max-w-7xl mx-auto w-full px-4 md:px-8 mb-12">
