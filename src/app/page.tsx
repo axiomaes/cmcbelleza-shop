@@ -4,6 +4,8 @@ import { fetchProducts } from '@/lib/woocommerce';
 import Button from '@/components/ui/Button';
 import { CheckCircle2 } from 'lucide-react';
 import ProductSlider from '@/components/ui/ProductSlider';
+import FeaturedCarousel from '@/components/ui/FeaturedCarousel';
+import ComingSoonBanner from '@/components/ui/ComingSoonBanner';
 import { Product } from '@/types';
 
 export const dynamic = 'force-dynamic';
@@ -22,7 +24,8 @@ export default async function Home() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+      <div className="relative">
+        <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <div className="w-full lg:w-1/2 text-center lg:text-left z-10 flex flex-col items-center lg:items-start animate-in fade-in slide-in-from-left-8 duration-700">
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-6">
@@ -88,6 +91,16 @@ export default async function Home() {
           <div className="absolute -top-10 -right-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
           <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary/20 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
+      </section>
+      <ComingSoonBanner />
+      </div>
+
+      <section className="max-w-7xl mx-auto w-full px-4 md:px-8 mb-12">
+        <h2 className="text-3xl font-bold text-dark mb-6 relative inline-block">
+          Productos Destacados
+          <span className="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-primary rounded-full"></span>
+        </h2>
+        <FeaturedCarousel products={featuredProducts.slice(0, 5)} />
       </section>
 
       {/* Featured Products Slider */}
