@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Revalidamos el tag 'products' que añadiremos a los fetches
-    revalidateTag('products');
+    revalidateTag('products', 'default');
     
     return NextResponse.json({ 
       revalidated: true, 
