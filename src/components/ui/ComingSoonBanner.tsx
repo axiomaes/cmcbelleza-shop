@@ -16,7 +16,7 @@ export default function ComingSoonBanner() {
       setIsVisible(true);
     }, 5000);
 
-    const targetDate = new Date('2026-04-07T00:00:00');
+    const targetDate = new Date('2026-04-13T00:00:00');
     const initialDiff = targetDate.getTime() - new Date().getTime();
     
     if (initialDiff <= 0) {
@@ -84,7 +84,7 @@ export default function ComingSoonBanner() {
           Próxima Apertura
         </h3>
         <p className="text-primary text-sm font-semibold tracking-wider mb-5">
-          7 DE ABRIL 2026
+          13 DE ABRIL 2026
         </p>
 
         <div className="flex items-center justify-between w-full px-2 gap-2">
