@@ -4,6 +4,11 @@ import { revalidateTag, revalidatePath } from 'next/cache';
 export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret');
 
+  if (!process.env.REVALIDATE_SECRET) {
+    console.error('REVALIDATE_SECRET is not defined in environment variables');
+    return NextResponse.json({ message: 'Server configuration error' }, { status: 500 });
+  }
+
   if (secret !== process.env.REVALIDATE_SECRET) {
     return NextResponse.json({ message: 'Invalid secret' }, { status: 401 });
   }
