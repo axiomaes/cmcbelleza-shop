@@ -24,6 +24,7 @@ export interface Product {
   categories: Category[];
   stock_status: 'instock' | 'outofstock' | 'onbackorder';
   stock_quantity: number | null;
+  featured: boolean;
 }
 
 export interface CartItem {

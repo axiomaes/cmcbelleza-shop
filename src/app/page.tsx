@@ -15,12 +15,12 @@ export const revalidate = 3600; // 1 hour
 export default async function Home() {
   let products: Product[] = [];
   try {
-    products = await fetchProducts({ per_page: 12 });
+    products = await fetchProducts({ featured: true, per_page: 8 });
   } catch (error) {
     console.error("Home Page Fetch Error:", error);
   }
   
-  const featuredProducts = products.slice(0, 8);
+  const featuredProducts = products;
 
   return (
     <div className="flex flex-col w-full">

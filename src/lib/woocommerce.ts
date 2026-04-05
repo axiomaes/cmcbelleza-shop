@@ -94,13 +94,14 @@ async function wooFetch<T>(endpoint: string, options: RequestInit = {}): Promise
   }
 }
 
-export async function fetchProducts(params?: { category?: string; per_page?: number; page?: number }): Promise<Product[]> {
+export async function fetchProducts(params?: { category?: string; per_page?: number; page?: number; featured?: boolean }): Promise<Product[]> {
   let query = "";
   if (params) {
     const searchParams = new URLSearchParams();
     if (params.category) searchParams.append("category", params.category);
     if (params.per_page) searchParams.append("per_page", params.per_page.toString());
     if (params.page) searchParams.append("page", params.page.toString());
+    if (params.featured) searchParams.append("featured", "true");
     query = `?${searchParams.toString()}`;
   }
   
@@ -110,6 +111,7 @@ export async function fetchProducts(params?: { category?: string; per_page?: num
     name: decodeHtmlEntities(product.name),
     short_description: decodeHtmlEntities(product.short_description),
     description: decodeHtmlEntities(product.description),
+    featured: product.featured || false,
   }));
 }
 
