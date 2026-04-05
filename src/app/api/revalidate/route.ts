@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidateTag } from 'next/cache';
+import { revalidateTag, revalidatePath } from 'next/cache';
 
 export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret');
@@ -11,6 +11,10 @@ export async function POST(request: NextRequest) {
   try {
     // Revalidamos el tag 'products' que añadiremos a los fetches
     revalidateTag('products', 'default');
+    
+    // Forzamos la revalidación de las páginas principales de listado
+    revalidatePath('/', 'layout');
+    revalidatePath('/tienda', 'layout');
     
     return NextResponse.json({ 
       revalidated: true, 

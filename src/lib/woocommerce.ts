@@ -31,7 +31,11 @@ async function wpFetch<T>(endpoint: string, options: RequestInit = {}): Promise<
       "Content-Type": "application/json",
       ...options.headers,
     },
-    next: { revalidate: 3600, tags: ['products'], ...options.next },
+    next: { 
+      revalidate: 3600, 
+      ...options.next,
+      tags: ['products', ...(options.next?.tags || [])]
+    },
   };
 
   try {
@@ -68,7 +72,11 @@ async function wooFetch<T>(endpoint: string, options: RequestInit = {}): Promise
       Authorization: `Basic ${auth}`,
       ...options.headers,
     },
-    next: { revalidate: 3600, tags: ['products'], ...options.next }, // Default 1 hour cache
+    next: { 
+      revalidate: 3600, 
+      ...options.next,
+      tags: ['products', ...(options.next?.tags || [])]
+    }, // Default 1 hour cache
   };
 
   try {
