@@ -91,7 +91,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter">
             {categories.map((cat) => (
-              <Link key={cat.id} href={cat.path} className="group flex flex-col">
+              <Link key={cat.id} href={cat.path as any} className="group flex flex-col">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low mb-4">
                   <Image 
                     src={cat.img} 
