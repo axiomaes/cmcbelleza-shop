@@ -42,66 +42,83 @@ const ProductCard = ({ product, priority = false }: ProductCardProps) => {
   const hasDiscount = product.sale_price && product.sale_price !== product.regular_price;
 
   return (
-    <article className="group bg-white/60 backdrop-blur-sm p-4 rounded-2xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-white/60 flex flex-col h-full relative overflow-hidden">
+    <article className="group bg-white p-3 rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 border border-outline-variant/20 flex flex-col h-full relative font-sans">
       <Link href={`/producto/${product.slug}`} className="absolute inset-0 z-10" aria-label={`Ver detalles de ${product.name}`} />
 
-      {/* Badge Oferta */}
-      {hasDiscount && (
-        <div className="absolute top-4 left-4 z-20 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg transform -rotate-1 group-hover:rotate-3 transition-transform">
-          OFERTA
-        </div>
-      )}
+      {/* Badges */}
+      <div className="absolute top-5 left-5 z-20 flex flex-col gap-2 pointer-events-none">
+        {hasDiscount && (
+          <div className="bg-secondary text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-widest shadow-md">
+            OFERTA
+          </div>
+        )}
+        {product.featured && (
+          <div className="bg-primary text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-widest shadow-md">
+            DESTACADO
+          </div>
+        )}
+      </div>
 
-      {/* Stock Status */}
+      {/* Stock status */}
       {product.stock_status === 'outofstock' && (
-        <div className="absolute top-4 right-4 z-20 bg-dark/80 text-white text-[10px] font-bold px-3 py-1 rounded-full backdrop-blur-sm">
-          Agotado
+        <div className="absolute top-5 right-5 z-20 bg-surface-container-highest/80 text-on-surface text-[10px] font-bold px-2.5 py-1 rounded backdrop-blur-md pointer-events-none">
+          SIN STOCK
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xl mb-4 relative bg-white pointer-events-none z-0 aspect-square">
+      {/* Visual Image container: Using object-cover to look like professional editorial shop, or contain if they are isolated. Let's stick to cover if ratio is fixed. Actually, object-contain on white BG is safer for most e-commerce packs. Let's upgrade padding */}
+      <div className="overflow-hidden rounded-lg mb-4 relative bg-surface-container-low pointer-events-none z-0 aspect-[4/5]">
         {product.images && product.images.length > 0 ? (
           <Image
             src={product.images[0].src}
             alt={product.images[0].alt || product.name}
             fill
-            className="object-contain p-4 transform group-hover:scale-110 transition-transform duration-700 ease-out"
+            className="object-contain p-6 mix-blend-multiply transform group-hover:scale-105 transition-transform duration-700 ease-out"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             priority={priority}
           />
         ) : (
-          <div className="w-full h-full bg-gray-50 flex items-center justify-center">
-            <span className="text-sm text-dark-muted font-medium">Sin imagen</span>
+          <div className="w-full h-full flex items-center justify-center text-outline">
+            <span className="material-symbols-outlined text-[48px]">image</span>
           </div>
         )}
         
-        {/* Overlay al hover */}
-        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500"></div>
+        {/* Bottom Hover Overlay functionality for quick actions */}
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/20 to-transparent hidden md:block">
+           {/* Could put quick-add here, but simple is better */}
+        </div>
       </div>
 
-      <div className="flex flex-col flex-1">
-        <h2 className="text-lg font-bold text-dark line-clamp-2 leading-tight group-hover:text-primary transition-colors pointer-events-none z-0 mb-2">
+      <div className="flex flex-col flex-1 px-1">
+        <h3 className="text-base font-serif font-medium text-on-surface mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors pointer-events-none z-0 min-h-[40px]">
           {product.name}
-        </h2>
+        </h3>
 
-        <div className="mt-auto pointer-events-none z-0">
-          <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-2xl font-extrabold text-secondary">
-              {formatPrice(product.price || '0')}
-            </span>
-            {hasDiscount && (
-              <span className="text-sm text-dark-muted line-through opacity-50">
-                {formatPrice(product.regular_price || '0')}
+        <div className="mt-auto pointer-events-none z-0 flex flex-col gap-4">
+          <div className="flex items-baseline justify-between gap-2 pt-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-lg font-bold text-primary">
+                {formatPrice(product.price || '0')}
               </span>
-            )}
+              {hasDiscount && (
+                <span className="text-xs text-outline line-through font-medium">
+                  {formatPrice(product.regular_price || '0')}
+                </span>
+              )}
+            </div>
           </div>
 
           <button
             onClick={handleAddToCart}
-            className="relative z-20 w-full bg-dark text-white py-3 rounded-full font-bold hover:bg-primary hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 transform active:scale-95 pointer-events-auto"
             disabled={product.stock_status === 'outofstock'}
+            className="relative z-20 w-full bg-white text-primary border border-primary py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-all duration-300 pointer-events-auto flex items-center justify-center gap-2 disabled:border-outline-variant disabled:text-outline-variant disabled:hover:bg-transparent"
           >
-            {product.stock_status === 'outofstock' ? 'Sin stock' : 'Añadir al carrito'}
+            {product.stock_status === 'outofstock' ? 'Agotado' : (
+              <>
+                <span className="material-symbols-outlined text-[18px]">shopping_cart</span>
+                Añadir
+              </>
+            )}
           </button>
         </div>
       </div>

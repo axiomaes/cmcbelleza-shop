@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 .next/
 .env.local
+
+# Design assets
+diseño/

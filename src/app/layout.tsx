@@ -1,21 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, EB_Garamond } from "next/font/google";
 import "../styles/globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const inter = Inter({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const serif = EB_Garamond({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: {
     template: '%s | CMC Belleza',
-    default: 'CMC Belleza — Productos Naturales y Belleza',
+    default: 'CMC Belleza — Cosmética Natural y Rituales de Bienestar',
   },
-  description: 'Descubre nuestra selección de cosméticos naturales, \
-cremas, aceites y tratamientos para el cuidado diario.',
+  description: 'Descubre nuestra cuidada selección de cosméticos naturales, cremas y aceites formulados con ciencia y pureza para el bienestar de tu piel.',
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -33,10 +39,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`scroll-smooth ${inter.variable}`}>
-      <body className="bg-base text-dark font-sans flex flex-col min-h-screen relative overflow-x-hidden">
-        <div className="absolute top-0 left-0 w-full h-[400px] bg-gradient-to-b from-primary/50 to-transparent -z-10 pointer-events-none"></div>
-        
+    <html lang="es" className={`scroll-smooth ${sans.variable} ${serif.variable}`}>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="bg-background text-on-surface font-sans flex flex-col min-h-screen relative overflow-x-hidden selection:bg-primary-fixed selection:text-primary">
         <Header />
         
         <main className="flex-grow">
