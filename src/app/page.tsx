@@ -134,19 +134,19 @@ export default async function Home() {
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] pointer-events-none"></div>
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10 text-center">
           <div className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[48px] text-secondary-fixed mb-4">biotech</span>
-            <h4 className="font-serif text-2xl mb-2">Fórmulas Clínicas</h4>
-            <p className="text-white/70 text-sm font-medium">Combinamos botánica pura con avances biotecnológicos para resultados reales.</p>
+            <span className="material-symbols-outlined text-[48px] text-secondary-fixed mb-4">verified</span>
+            <h4 className="font-serif text-2xl mb-2">Selección Experta</h4>
+            <p className="text-white/70 text-sm font-medium">Curaduría rigurosa de fórmulas que fusionan botánica pura y biotecnología para resultados reales.</p>
           </div>
           <div className="flex flex-col items-center">
             <span className="material-symbols-outlined text-[48px] text-secondary-fixed mb-4">spa</span>
-            <h4 className="font-serif text-2xl mb-2">Bienestar Holístico</h4>
-            <p className="text-white/70 text-sm font-medium">Tu piel es el reflejo de tu salud integral. Cuidamos cada capa, sin tóxicos.</p>
+            <h4 className="font-serif text-2xl mb-2">Bienestar Filtrado</h4>
+            <p className="text-white/70 text-sm font-medium">Rastreamos el mercado global buscando pureza e integridad. Acercamos cosmética limpia, sin tóxicos.</p>
           </div>
           <div className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-[48px] text-secondary-fixed mb-4">package_2</span>
-            <h4 className="font-serif text-2xl mb-2">Envíos Conscientes</h4>
-            <p className="text-white/70 text-sm font-medium">Logística optimizada y packaging biodegradable minimizando el impacto ambiental.</p>
+            <span className="material-symbols-outlined text-[48px] text-secondary-fixed mb-4">local_shipping</span>
+            <h4 className="font-serif text-2xl mb-2">Logística Directa</h4>
+            <p className="text-white/70 text-sm font-medium">Conexión optimizada con proveedores verificados para envíos ágiles reduciendo pasos intermedios.</p>
           </div>
         </div>
       </section>
