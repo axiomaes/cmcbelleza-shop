@@ -8,10 +8,10 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // 1 hour
 
 const categories = [
-  { id: 'cuidado-facial', name: 'Cuidado Facial', img: 'https://images.unsplash.com/photo-1570194065650-d99fb4b8ccb0?w=500&q=80', count: '12 productos' },
-  { id: 'cuidado-corporal', name: 'Corporal', img: 'https://images.unsplash.com/photo-1564020426549-fabfb8c467ad?w=500&q=80', count: '8 productos' },
-  { id: 'serums-aceites', name: 'Sérums & Aceites', img: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?w=500&q=80', count: '6 productos' },
-  { id: 'accesorios', name: 'Accesorios', img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80', count: '4 productos' }
+  { id: 'cuidado-facial', name: 'Cuidado Facial', img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=80', path: '/categoria/cuidado-facial' },
+  { id: 'cuidado-corporal', name: 'Corporal', img: 'https://images.unsplash.com/photo-1564020426549-fabfb8c467ad?w=800&q=80', path: '/categoria/cuidado-corporal' },
+  { id: 'serums-aceites', name: 'Sérums & Aceites', img: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?w=800&q=80', path: '/categoria/serums-aceites' },
+  { id: 'tips-rutinas', name: 'Tips & Rutinas', img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80', path: '/tips' }
 ];
 
 export default async function Home() {
@@ -91,7 +91,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter">
             {categories.map((cat) => (
-              <Link key={cat.id} href={`/categoria/${cat.id}`} className="group flex flex-col">
+              <Link key={cat.id} href={cat.path} className="group flex flex-col">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low mb-4">
                   <Image 
                     src={cat.img} 
@@ -102,7 +102,6 @@ export default async function Home() {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all"></div>
                 </div>
                 <h3 className="font-serif text-xl text-on-surface group-hover:text-primary transition-colors font-medium">{cat.name}</h3>
-                <p className="text-xs text-on-surface-variant/70 font-bold tracking-wider uppercase">{cat.count}</p>
               </Link>
             ))}
           </div>
