@@ -27,3 +27,7 @@ pnpm-debug.log*
 
 # Design assets
 diseño/
+
+# CMC Social Automation
+cmc-social-automation/dist/
+cmc-social-automation/.env
