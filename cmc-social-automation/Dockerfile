@@ -1,8 +1,12 @@
 # Build stage
 FROM node:20-alpine AS builder
 WORKDIR /app
+
+# Forzar modo desarrollo en builder para asegurar instalación de tsc (devDependencies)
+ENV NODE_ENV=development
+
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --include=dev
 COPY . .
 RUN npm run build
 
@@ -13,7 +17,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 COPY --from=builder /app/dist ./dist
 
