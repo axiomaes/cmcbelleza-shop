@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CMC Belleza — Polylang REST API Fix
  * Description: Habilita filtrado por idioma en REST API para arquitectura headless con Polylang Free
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: CMC Belleza Dev Team
  */
 
@@ -17,13 +17,11 @@ add_action( 'plugins_loaded', function() {
     }
     
     /**
-     * HOOK 1: parse_request
+     * HOOK 1: Iniciar idioma en Contexto REST Global
+     * Enganchamos en rest_api_init (que siempre se ejecuta antes del dispatch REST)
+     * para forzar a Polylang a establecer curlang en peticiones WooCommerce.
      */
-    add_action( 'parse_request', function( $wp ) {
-        if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
-            return;
-        }
-
+    add_action( 'rest_api_init', function() {
         if ( isset( $_GET['lang'] ) ) {
             $lang = sanitize_text_field( $_GET['lang'] );
             $allowed_langs = array( 'es', 'en' ); 
@@ -37,10 +35,10 @@ add_action( 'plugins_loaded', function() {
                 }
             }
         }
-    }, 5 ); 
+    }, 5 );
 
     /**
-     * HOOK 2: rest_post_query & rest_page_query
+     * HOOK 2: rest_post_query & rest_page_query (Para core WP)
      */
     add_filter( 'rest_post_query', 'cmc_filter_rest_queries_by_polylang', 10, 2 );
     add_filter( 'rest_page_query', 'cmc_filter_rest_queries_by_polylang', 10, 2 );
@@ -54,33 +52,44 @@ add_action( 'plugins_loaded', function() {
     }
 
     /**
-     * HOOK 3: woocommerce_rest_product_query (MEJORADO V1.0.1)
-     * Inyecta un tax_query explícito sobre la taxonomía 'language' de Polylang,
-     * garantizando el filtrado estricto de productos en WooCommerce REST API.
+     * HOOK 3: Solución Definitiva via pre_get_posts (Garantizado para WooCommerce REST)
+     * Intercepta la consulta SQL final de WP_Query antes de ejecutarse.
+     * Como es una fase tardía, evita cualquier limpieza o filtrado del REST Controller.
      */
-    add_filter( 'woocommerce_rest_product_query', function( $args, $request ) {
-        $lang = $request->get_param( 'lang' );
-        if ( ! empty( $lang ) ) {
-            // Habilitar supresión de filtros
-            $args['suppress_filters'] = false;
+    add_action( 'pre_get_posts', function( $query ) {
+        // Ejecutar solo en contexto REST API y si no es panel de administración
+        if ( ! is_admin() && defined( 'REST_REQUEST' ) && REST_REQUEST ) {
             
-            // Forzar inyección explícita de la taxonomía de idioma
-            if ( ! isset( $args['tax_query'] ) ) {
-                $args['tax_query'] = array();
+            // Capturar parámetro ?lang de la URL global
+            $lang = isset( $_GET['lang'] ) ? sanitize_text_field( $_GET['lang'] ) : '';
+            $allowed_langs = array( 'es', 'en' );
+            
+            if ( ! empty( $lang ) && in_array( $lang, $allowed_langs ) ) {
+                
+                // Caso 1: Si la query consulta productos de WooCommerce ('product')
+                if ( $query->get( 'post_type' ) === 'product' || ( is_array( $query->get( 'post_type' ) ) && in_array( 'product', $query->get( 'post_type' ) ) ) ) {
+                    
+                    $tax_query = $query->get( 'tax_query' );
+                    if ( ! is_array( $tax_query ) ) {
+                        $tax_query = array();
+                    }
+                    
+                    // Inyección manual indestructible de la taxonomía 'language'
+                    $tax_query[] = array(
+                        'taxonomy' => 'language',
+                        'field'    => 'slug',
+                        'terms'    => $lang,
+                        'operator' => 'IN',
+                    );
+                    
+                    $query->set( 'tax_query', $tax_query );
+                }
             }
-            
-            $args['tax_query'][] = array(
-                'taxonomy' => 'language',
-                'field'    => 'slug',
-                'terms'    => sanitize_text_field( $lang ),
-                'operator' => 'IN',
-            );
         }
-        return $args;
-    }, 10, 2 );
+    }, 999 ); // Prioridad máxima para ser el último hook ejecutado
 
     /**
-     * HOOK 4: register_rest_field
+     * HOOK 4: register_rest_field (Translations)
      */
     add_action( 'rest_api_init', function() {
         $post_types = array( 'post', 'page', 'product' );
