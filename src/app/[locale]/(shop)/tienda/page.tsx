@@ -5,14 +5,19 @@ import { Product, Category } from '@/types';
 export const dynamic = 'force-dynamic';
 export const revalidate = 600; // 10 minutes
 
-export default async function TiendaPage() {
+interface TiendaPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function TiendaPage({ params }: TiendaPageProps) {
+  const { locale } = await params;
   let products: Product[] = [];
   let categories: Category[] = [];
 
   try {
     const [p, c] = await Promise.all([
-      fetchProducts({ per_page: 100 }),
-      fetchCategories(),
+      fetchProducts({ per_page: 100, lang: locale }),
+      fetchCategories(locale),
     ]);
     products = p;
     categories = c;

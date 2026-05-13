@@ -4,13 +4,13 @@ import { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   try {
-    const page = await fetchPageBySlug(slug);
+    const page = await fetchPageBySlug(slug, locale);
     return {
       title: `${page.title.rendered} | CMC Belleza`,
     };
@@ -22,10 +22,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LegalPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   
   try {
-    const page = await fetchPageBySlug(slug);
+    const page = await fetchPageBySlug(slug, locale);
 
     return (
       <div className="bg-white py-16 md:py-24">

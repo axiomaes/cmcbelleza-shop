@@ -14,10 +14,15 @@ const categories = [
   { id: 'tips-rutinas', name: 'Tips & Rutinas', img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80', path: '/tips' }
 ];
 
-export default async function Home() {
+interface HomeProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function Home({ params }: HomeProps) {
+  const { locale } = await params;
   let products: Product[] = [];
   try {
-    products = await fetchProducts({ featured: true, per_page: 8 });
+    products = await fetchProducts({ featured: true, per_page: 8, lang: locale });
   } catch (error) {
     console.error("Home Page Fetch Error:", error);
   }
@@ -44,10 +49,10 @@ export default async function Home() {
               Fórmulas botánicas seleccionadas bajo rigurosos estándares de pureza, potenciando la salud innata de tu piel día a día.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/tienda" className="bg-primary text-white px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest shadow-lg shadow-primary/10 hover:bg-primary-container hover:-translate-y-0.5 transition-all">
+              <Link href={`/${locale}/tienda`} className="bg-primary text-white px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest shadow-lg shadow-primary/10 hover:bg-primary-container hover:-translate-y-0.5 transition-all">
                 Explorar Tienda
               </Link>
-              <Link href="/tips" className="border border-outline px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest text-on-surface hover:bg-white hover:border-primary transition-all">
+              <Link href={`/${locale}/tips`} className="border border-outline px-10 py-4 rounded-full font-bold text-sm uppercase tracking-widest text-on-surface hover:bg-white hover:border-primary transition-all">
                 Ver Rutinas
               </Link>
             </div>
@@ -84,14 +89,14 @@ export default async function Home() {
               <span className="text-secondary font-bold text-xs uppercase tracking-[0.2em] block mb-2">Selección Esencial</span>
               <h2 className="font-serif text-3xl md:text-4xl text-primary">Categorías Destacadas</h2>
             </div>
-            <Link href="/tienda" className="text-sm font-bold uppercase tracking-wider text-primary hover:text-secondary transition-colors flex items-center gap-1">
+            <Link href={`/${locale}/tienda`} className="text-sm font-bold uppercase tracking-wider text-primary hover:text-secondary transition-colors flex items-center gap-1">
               Ver todo el catálogo <span className="material-symbols-outlined text-[18px]">trending_flat</span>
             </Link>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter">
             {categories.map((cat) => (
-              <Link key={cat.id} href={cat.path as any} className="group flex flex-col">
+              <Link key={cat.id} href={`/${locale}${cat.path}` as any} className="group flex flex-col">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low mb-4">
                   <Image 
                     src={cat.img} 

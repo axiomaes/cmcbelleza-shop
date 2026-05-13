@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 const CATEGORY_CONTENT: Record<string, { title: string, subtitle: string, desc: string, icon: React.ReactNode, image: string, tips: string[] }> = {
@@ -22,7 +22,7 @@ const CATEGORY_CONTENT: Record<string, { title: string, subtitle: string, desc: 
     subtitle: 'Resplandece con la fuerza de la naturaleza',
     desc: 'Nuestra rutina facial está diseñada para nutrir, reparar y proteger tu piel respetando su equilibrio natural. Fórmulas limpias, sin tóxicos y altamente eficaces.',
     icon: <Sparkles className="w-8 h-8 text-primary" />,
-    image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1600&q=80',
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1600&q=80',
     tips: [
       'Doble limpieza: Usa un limpiador en aceite seguido de uno al agua cada noche.',
       'Aplica los productos sobre la piel ligeramente húmeda para mayor absorción.',
@@ -58,9 +58,53 @@ const CATEGORY_CONTENT: Record<string, { title: string, subtitle: string, desc: 
   }
 };
 
+// Simple mapping for English content alternatives if user changes slug
+const ENGLISH_CONTENT: Record<string, { title: string, subtitle: string, desc: string, icon: React.ReactNode, image: string, tips: string[] }> = {
+  'cuidado-facial': {
+    title: 'Facial Care',
+    subtitle: 'Glow with the strength of nature',
+    desc: 'Our facial routine is designed to nourish, repair, and protect your skin while respecting its natural balance. Clean, non-toxic, and highly effective formulas.',
+    icon: <Sparkles className="w-8 h-8 text-primary" />,
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1600&q=80',
+    tips: [
+      'Double cleansing: Use an oil cleanser followed by a water one every night.',
+      'Apply products on slightly damp skin for greater absorption.',
+      'Don\'t forget the neck and neckline, they are extensions of your face.',
+      'Sunscreen is the indispensable final step every morning.'
+    ]
+  },
+  'cuidado-corporal': {
+    title: 'Body Care',
+    subtitle: 'A complete wellness ritual',
+    desc: 'Pamper every inch of your skin with rich textures and enveloping scents. Lasting deep hydration, restoring elasticity and luminosity.',
+    icon: <Leaf className="w-8 h-8 text-primary" />,
+    image: 'https://images.unsplash.com/photo-1615397323755-eeb522105193?w=1600&q=80',
+    tips: [
+      'Exfoliate your body 1-2 times a week to renew cells.',
+      'Apply body lotion or oil right out of the shower.',
+      'Take the moment to give a gentle massage that reactivates circulation.',
+      'Dryer areas (elbows, knees) welcome extra rich butters.'
+    ]
+  },
+  'serums-aceites': {
+    title: 'Serums and Oils',
+    subtitle: 'Pure concentrates of vitality',
+    desc: 'Botanical actives at their maximum concentration. Precious drops that penetrate deep layers to transform your skin from within.',
+    icon: <Droplets className="w-8 h-8 text-primary" />,
+    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1600&q=80',
+    tips: [
+      'You only need 3 to 5 drops for the entire face and neck.',
+      'Warm the oil by lightly rubbing palms together before applying.',
+      'Gently press into skin instead of rubbing hard.',
+      'You can mix a couple of drops with your cream to enrich its texture.'
+    ]
+  }
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const content = CATEGORY_CONTENT[slug];
+  const { slug, locale } = await params;
+  const dataMap = locale === 'en' ? ENGLISH_CONTENT : CATEGORY_CONTENT;
+  const content = dataMap[slug] || CATEGORY_CONTENT[slug];
   
   if (!content) return { title: 'Categoría' };
   
@@ -71,9 +115,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CategoryPage({ params }: Props) {
-  const { slug } = await params;
-  
-  const content = CATEGORY_CONTENT[slug];
+  const { slug, locale } = await params;
+  const dataMap = locale === 'en' ? ENGLISH_CONTENT : CATEGORY_CONTENT;
+  const content = dataMap[slug] || CATEGORY_CONTENT[slug];
 
   if (!content) {
     notFound();
@@ -82,11 +126,11 @@ export default async function CategoryPage({ params }: Props) {
   // Find WooCommerce Category ID
   let products: Product[] = [];
   try {
-    const categories = await fetchCategories();
+    const categories = await fetchCategories(locale);
     const wpCategory = categories.find(c => c.slug === slug);
     
     if (wpCategory) {
-      products = await fetchProducts({ category: wpCategory.id.toString(), per_page: 8 });
+      products = await fetchProducts({ category: wpCategory.id.toString(), per_page: 8, lang: locale });
     }
   } catch (err) {
     console.error(`Error fetching products for category: ${slug}`, err);
@@ -133,7 +177,7 @@ export default async function CategoryPage({ params }: Props) {
               {content.desc}
             </p>
             <div className="mt-4 inline-flex">
-              <Link href="/tienda">
+              <Link href={`/${locale}/tienda`}>
                 <Button variant="dark" className="rounded-full shadow-lg">Comprar Colección</Button>
               </Link>
             </div>
@@ -168,7 +212,7 @@ export default async function CategoryPage({ params }: Props) {
               </h2>
               <p className="text-dark-muted mt-4">Los favoritos de nuestra comunidad para tu {content.title.toLowerCase()}.</p>
             </div>
-            <Link href={`/tienda?category=${slug}`} className="text-primary font-bold hover:underline shrink-0 flex items-center gap-1">
+            <Link href={`/${locale}/tienda?category=${slug}`} className="text-primary font-bold hover:underline shrink-0 flex items-center gap-1">
               Ver todos los productos &rarr;
             </Link>
           </div>

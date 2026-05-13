@@ -1,0 +1,55 @@
+{
+  "header": {
+    "home": "Home",
+    "shop": "Shop",
+    "blog": "Blog",
+    "tips": "Tips & Routines"
+  },
+  "footer": {
+    "explore": "Explore",
+    "legal": "Legal",
+    "contact": "Contact",
+    "notice": "Legal Notice",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "terms": "Terms",
+    "hours": "Customer Service: Mon to Fri",
+    "location": "Madrid, Spain",
+    "slogan": "Scientific purity, natural beauty.",
+    "description": "Fusing cosmetic science with botanical purity to enhance your skin's integrity."
+  },
+  "tips": {
+    "hero_badge": "Your Wellbeing Guide",
+    "hero_title": "Mindful Tips & Routines",
+    "hero_desc": "The key to radiant skin is not the quantity of products, but consistency and listening to your botanical needs.",
+    "finder_title": "Find your ideal routine",
+    "finder_desc": "What is your predominant skin type?",
+    "skin_types": {
+      "seca": "Dry",
+      "grasa": "Oily",
+      "mixta": "Combination",
+      "sensible": "Sensitive",
+      "madura": "Mature"
+    },
+    "ritual_steps": "Ritual Steps",
+    "btn_view_products": "View Recommended Products",
+    "routines": [
+      {
+        "title": "Morning Vitality Routine",
+        "desc": "Prepare and protect your skin to face the day.",
+        "steps": ["Gentle Cleanser", "Antioxidant Toner", "Vitamin C Serum", "Moisturizer + SPF"]
+      },
+      {
+        "title": "Nighttime Regenerating Ritual",
+        "desc": "Repair accumulated damage and stimulate cell renewal.",
+        "steps": ["Double Cleansing", "Exfoliating Toner (twice a week)", "Facial Oil or Treatment", "Eye Contour & Nourishing Cream"]
+      }
+    ]
+  },
+  "shop": {
+    "add_to_cart": "Add to cart",
+    "related": "Related Products",
+    "empty": "No products found.",
+    "loading": "Loading..."
+  }
+}

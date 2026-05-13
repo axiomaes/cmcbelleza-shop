@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, EB_Garamond } from "next/font/google";
-import "../styles/globals.css";
+import "../../styles/globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
@@ -33,13 +33,19 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface LayoutProps {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<LayoutProps>) {
+  const { locale } = await params;
+
   return (
-    <html lang="es" className={`scroll-smooth ${sans.variable} ${serif.variable}`}>
+    <html lang={locale || 'es'} className={`scroll-smooth ${sans.variable} ${serif.variable}`}>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
@@ -47,13 +53,13 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-surface font-sans flex flex-col min-h-screen relative overflow-x-hidden selection:bg-primary-fixed selection:text-primary">
-        <Header />
+        <Header locale={locale || 'es'} />
         
         <main className="flex-grow">
           {children}
         </main>
         
-        <Footer />
+        <Footer locale={locale || 'es'} />
       </body>
     </html>
   );

@@ -15,13 +15,13 @@ function formatDate(dateString: string) {
 }
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   try {
-    const post = await fetchBlogPostBySlug(slug);
+    const post = await fetchBlogPostBySlug(slug, locale);
     return {
       title: `${post.title.rendered} | Blog CMC Belleza`,
       description: post.excerpt.rendered.replace(/<[^>]*>?/gm, '').substring(0, 160),
@@ -34,10 +34,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   
   try {
-    const post = await fetchBlogPostBySlug(slug);
+    const post = await fetchBlogPostBySlug(slug, locale);
     const imageUrl = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
     const imageAlt = post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || post.title.rendered;
 
@@ -46,7 +46,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Back button */}
           <Link 
-            href="/blog" 
+            href={`/${locale}/blog`} 
             className="inline-flex items-center text-neutral-500 hover:text-brand-600 mb-8 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: Props) {
         <h1 className="text-3xl font-bold text-neutral-900 mb-4">Post no encontrado</h1>
         <p className="text-neutral-600 mb-8">Lo sentimos, el artículo que buscas no existe o ha sido movido.</p>
         <Link 
-          href="/blog" 
+          href={`/${locale}/blog`} 
           className="bg-brand-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-700 transition-colors inline-block"
         >
           Ir al Blog

@@ -94,7 +94,7 @@ async function wooFetch<T>(endpoint: string, options: RequestInit = {}): Promise
   }
 }
 
-export async function fetchProducts(params?: { category?: string; per_page?: number; page?: number; featured?: boolean }): Promise<Product[]> {
+export async function fetchProducts(params?: { category?: string; per_page?: number; page?: number; featured?: boolean; lang?: string }): Promise<Product[]> {
   let query = "";
   if (params) {
     const searchParams = new URLSearchParams();
@@ -102,6 +102,7 @@ export async function fetchProducts(params?: { category?: string; per_page?: num
     if (params.per_page) searchParams.append("per_page", params.per_page.toString());
     if (params.page) searchParams.append("page", params.page.toString());
     if (params.featured) searchParams.append("featured", "true");
+    if (params.lang) searchParams.append("lang", params.lang);
     query = `?${searchParams.toString()}`;
   }
   
@@ -115,8 +116,9 @@ export async function fetchProducts(params?: { category?: string; per_page?: num
   }));
 }
 
-export async function fetchProductBySlug(slug: string): Promise<Product> {
-  const products = await wooFetch<Product[]>(`/products?slug=${slug}`);
+export async function fetchProductBySlug(slug: string, lang?: string): Promise<Product> {
+  const query = lang ? `/products?slug=${slug}&lang=${lang}` : `/products?slug=${slug}`;
+  const products = await wooFetch<Product[]>(query);
   if (!products || products.length === 0) {
     throw new Error(`Product not found with slug: ${slug}`);
   }
@@ -129,12 +131,14 @@ export async function fetchProductBySlug(slug: string): Promise<Product> {
   };
 }
 
-export async function fetchProductById(id: number): Promise<Product> {
-  return wooFetch<Product>(`/products/${id}`);
+export async function fetchProductById(id: number, lang?: string): Promise<Product> {
+  const query = lang ? `/products/${id}?lang=${lang}` : `/products/${id}`;
+  return wooFetch<Product>(query);
 }
 
-export async function fetchCategories(): Promise<Category[]> {
-  return wooFetch<Category[]>("/products/categories");
+export async function fetchCategories(lang?: string): Promise<Category[]> {
+  const query = lang ? `/products/categories?lang=${lang}` : "/products/categories";
+  return wooFetch<Category[]>(query);
 }
 
 export async function createOrder(data: OrderData): Promise<Order> {
@@ -146,17 +150,19 @@ export async function createOrder(data: OrderData): Promise<Order> {
 }
 
 // Posts del blog via WordPress REST API
-export async function fetchBlogPosts(params?: { per_page?: number; page?: number }): Promise<BlogPost[]> {
+export async function fetchBlogPosts(params?: { per_page?: number; page?: number; lang?: string }): Promise<BlogPost[]> {
   const searchParams = new URLSearchParams();
   searchParams.append("_embed", "true");
   if (params?.per_page) searchParams.append("per_page", params.per_page.toString());
   if (params?.page) searchParams.append("page", params.page.toString());
+  if (params?.lang) searchParams.append("lang", params.lang);
   
   return wpFetch<BlogPost[]>(`/posts?${searchParams.toString()}`);
 }
 
-export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
-  const posts = await wpFetch<BlogPost[]>(`/posts?slug=${slug}&_embed`);
+export async function fetchBlogPostBySlug(slug: string, lang?: string): Promise<BlogPost> {
+  const query = lang ? `/posts?slug=${slug}&_embed&lang=${lang}` : `/posts?slug=${slug}&_embed`;
+  const posts = await wpFetch<BlogPost[]>(query);
   if (!posts || posts.length === 0) {
     throw new Error(`Post not found with slug: ${slug}`);
   }
@@ -164,8 +170,9 @@ export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
 }
 
 // Páginas legales via WordPress REST API  
-export async function fetchPageBySlug(slug: string): Promise<WPPage> {
-  const pages = await wpFetch<WPPage[]>(`/pages?slug=${slug}`);
+export async function fetchPageBySlug(slug: string, lang?: string): Promise<WPPage> {
+  const query = lang ? `/pages?slug=${slug}&lang=${lang}` : `/pages?slug=${slug}`;
+  const pages = await wpFetch<WPPage[]>(query);
   if (!pages || pages.length === 0) {
     throw new Error(`Page not found with slug: ${slug}`);
   }

@@ -1,0 +1,55 @@
+{
+  "header": {
+    "home": "Inicio",
+    "shop": "Tienda",
+    "blog": "Blog",
+    "tips": "Tips & Rutinas"
+  },
+  "footer": {
+    "explore": "Explorar",
+    "legal": "Legal",
+    "contact": "Contacto",
+    "notice": "Aviso Legal",
+    "privacy": "Privacidad",
+    "cookies": "Cookies",
+    "terms": "Términos",
+    "hours": "Atención al cliente: Lunes a Viernes",
+    "location": "Madrid, España",
+    "slogan": "Pureza científica, belleza natural.",
+    "description": "Fusionando la ciencia cosmética con la pureza botánica para potenciar la integridad de tu piel."
+  },
+  "tips": {
+    "hero_badge": "Tu Guía de Bienestar",
+    "hero_title": "Tips y Rutinas Conscientes",
+    "hero_desc": "La clave de una piel radiante no es la cantidad de productos, sino la constancia y la escucha de tus necesidades botánicas.",
+    "finder_title": "Encuentra tu rutina ideal",
+    "finder_desc": "¿Cuál es tu tipo de piel predominante?",
+    "skin_types": {
+      "seca": "Seca",
+      "grasa": "Grasa",
+      "mixta": "Mixta",
+      "sensible": "Sensible",
+      "madura": "Madura"
+    },
+    "ritual_steps": "Pasos del Ritual",
+    "btn_view_products": "Ver Productos Recomendados",
+    "routines": [
+      {
+        "title": "Rutina Matutina Vitalidad",
+        "desc": "Prepara y protege tu piel para afrontar el día.",
+        "steps": ["Limpiador Suave", "Tónico Antioxidante", "Sérum Vitamina C", "Crema Hidratante + SPF"]
+      },
+      {
+        "title": "Ritual Nocturno Regenerador",
+        "desc": "Repara el daño acumulado y estimula la renovación celular.",
+        "steps": ["Doble Limpieza", "Tónico Exfoliante (2 veces/semana)", "Aceite Facial o Tratamiento", "Contorno y Crema Nutritiva"]
+      }
+    ]
+  },
+  "shop": {
+    "add_to_cart": "Añadir al carrito",
+    "related": "Productos Relacionados",
+    "empty": "No se encontraron productos.",
+    "loading": "Cargando..."
+  }
+}

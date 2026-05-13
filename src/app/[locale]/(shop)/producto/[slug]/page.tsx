@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 
 // En Next.js 15, params es una Promise
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export const revalidate = 3600; // 1 hour
@@ -27,10 +27,22 @@ function formatPrice(price: string): string {
 
 export async function generateStaticParams() {
   try {
-    const products = await fetchProducts({ per_page: 20 });
-    return products.map((product) => ({
+    const [productsES, productsEN] = await Promise.all([
+      fetchProducts({ per_page: 20, lang: 'es' }),
+      fetchProducts({ per_page: 20, lang: 'en' }),
+    ]);
+    
+    const paramsES = productsES.map((product) => ({
+      locale: 'es',
       slug: product.slug,
     }));
+    
+    const paramsEN = productsEN.map((product) => ({
+      locale: 'en',
+      slug: product.slug,
+    }));
+    
+    return [...paramsES, ...paramsEN];
   } catch (error) {
     console.error("Error generating static params:", error);
     return [];
@@ -38,9 +50,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   try {
-    const product = await fetchProductBySlug(slug);
+    const product = await fetchProductBySlug(slug, locale);
     
     return {
       title: product.name,
@@ -58,11 +70,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   
   let product;
   try {
-    product = await fetchProductBySlug(slug);
+    product = await fetchProductBySlug(slug, locale);
   } catch (error) {
     notFound();
   }
@@ -70,7 +82,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Link 
-        href="/tienda" 
+        href={`/${locale}/tienda`} 
         className="inline-flex items-center text-dark-muted hover:text-primary mb-8 font-medium transition-colors group"
       >
         <ArrowLeft className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" />

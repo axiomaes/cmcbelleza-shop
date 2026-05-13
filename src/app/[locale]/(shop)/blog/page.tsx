@@ -17,11 +17,16 @@ function formatDate(dateString: string) {
   });
 }
 
-export default async function BlogPage() {
+interface BlogPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { locale } = await params;
   let posts: BlogPost[] = [];
   
   try {
-    posts = await fetchBlogPosts();
+    posts = await fetchBlogPosts({ lang: locale });
   } catch (error) {
     console.error('Error loading blog posts:', error);
   }
@@ -52,7 +57,7 @@ export default async function BlogPage() {
               
               return (
                 <article key={post.id} className="group flex flex-col bg-white rounded-2xl border border-outline-variant/20 overflow-hidden hover:shadow-xl transition-all duration-500">
-                  <Link href={`/blog/${post.slug}`} className="relative aspect-[16/10] overflow-hidden">
+                  <Link href={`/${locale}/blog/${post.slug}`} className="relative aspect-[16/10] overflow-hidden">
                     {imageUrl ? (
                       <Image
                         src={imageUrl}
@@ -73,7 +78,7 @@ export default async function BlogPage() {
                     <div className="text-xs text-secondary font-bold uppercase tracking-widest mb-3">
                       {formatDate(post.date)}
                     </div>
-                    <Link href={`/blog/${post.slug}`}>
+                    <Link href={`/${locale}/blog/${post.slug}`}>
                       <h2 
                         className="font-serif text-2xl text-on-surface mb-4 group-hover:text-primary transition-colors leading-tight"
                         dangerouslySetInnerHTML={{ __html: post.title.rendered }}
@@ -83,7 +88,7 @@ export default async function BlogPage() {
                       {stripHtml(post.excerpt.rendered)}
                     </p>
                     <Link 
-                      href={`/blog/${post.slug}`}
+                      href={`/${locale}/blog/${post.slug}`}
                       className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary group-hover:text-secondary transition-colors"
                     >
                       Leer el Artículo
