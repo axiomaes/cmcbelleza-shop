@@ -16,7 +16,13 @@
     "hours": "Atención al cliente: Lunes a Viernes",
     "location": "Madrid, España",
     "slogan": "Pureza científica, belleza natural.",
-    "description": "Fusionando la ciencia cosmética con la pureza botánica para potenciar la integridad de tu piel."
+    "description": "Fusionando la ciencia cosmética con la pureza botánica para potenciar la integridad de tu piel.",
+    "slugs": {
+      "notice": "aviso-legal",
+      "privacy": "politica-privacidad",
+      "cookies": "politica-de-cookies",
+      "terms": "terminos-y-condiciones-de-compra"
+    }
   },
   "tips": {
     "hero_badge": "Tu Guía de Bienestar",

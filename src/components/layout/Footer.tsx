@@ -56,10 +56,10 @@ const Footer = async ({ locale = 'es' }: FooterProps) => {
           <div className="md:col-span-2">
             <h3 className="text-secondary-fixed font-bold text-xs uppercase tracking-[0.2em] mb-6">{dict.footer.legal}</h3>
             <ul className="space-y-4 text-sm font-medium">
-              <li><Link href={`/${locale}/info/aviso-legal`} className="text-white/80 hover:text-white transition-colors">{dict.footer.notice}</Link></li>
-              <li><Link href={`/${locale}/info/politica-privacidad`} className="text-white/80 hover:text-white transition-colors">{dict.footer.privacy}</Link></li>
-              <li><Link href={`/${locale}/info/politica-cookies`} className="text-white/80 hover:text-white transition-colors">{dict.footer.cookies}</Link></li>
-              <li><Link href={`/${locale}/info/terminos-y-condiciones-de-compra`} className="text-white/80 hover:text-white transition-colors">{dict.footer.terms}</Link></li>
+              <li><Link href={`/${locale}/info/${dict.footer.slugs?.notice || 'aviso-legal'}`} className="text-white/80 hover:text-white transition-colors">{dict.footer.notice}</Link></li>
+              <li><Link href={`/${locale}/info/${dict.footer.slugs?.privacy || 'politica-privacidad'}`} className="text-white/80 hover:text-white transition-colors">{dict.footer.privacy}</Link></li>
+              <li><Link href={`/${locale}/info/${dict.footer.slugs?.cookies || 'politica-de-cookies'}`} className="text-white/80 hover:text-white transition-colors">{dict.footer.cookies}</Link></li>
+              <li><Link href={`/${locale}/info/${dict.footer.slugs?.terms || 'terminos-y-condiciones-de-compra'}`} className="text-white/80 hover:text-white transition-colors">{dict.footer.terms}</Link></li>
             </ul>
           </div>
 
