@@ -3,7 +3,7 @@ import { query } from './index.js';
 export type SocialPlatform = 'instagram' | 'facebook' | 'tiktok' | 'x';
 
 export async function initDatabase() {
-  const sql = `
+  const sqlLogs = `
     CREATE TABLE IF NOT EXISTS registro_social_media (
       id SERIAL PRIMARY KEY,
       product_id BIGINT NOT NULL,
@@ -17,7 +17,69 @@ export async function initDatabase() {
       UNIQUE(product_id, platform)
     );
   `;
-  await query(sql);
+  
+  const sqlTokens = `
+    CREATE TABLE IF NOT EXISTS meta_tokens (
+      id SERIAL PRIMARY KEY,
+      token_type VARCHAR(50) NOT NULL,
+      access_token TEXT NOT NULL,
+      expires_at TIMESTAMP,
+      page_id VARCHAR(100),
+      status VARCHAR(20) DEFAULT 'ACTIVE',
+      created_at TIMESTAMP DEFAULT NOW(),
+      updated_at TIMESTAMP DEFAULT NOW()
+    );
+  `;
+
+  await query(sqlLogs);
+  await query(sqlTokens);
+}
+
+export interface MetaTokenRecord {
+  id?: number;
+  token_type: string;
+  access_token: string;
+  expires_at: Date | null;
+  page_id: string | null;
+  status?: string;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export async function getActiveMetaToken(): Promise<MetaTokenRecord | null> {
+  const sql = `
+    SELECT * FROM meta_tokens 
+    WHERE status != 'EXPIRED'
+    ORDER BY created_at DESC 
+    LIMIT 1
+  `;
+  const result = await query(sql);
+  if ((result.rowCount ?? 0) > 0) {
+    return result.rows[0] as MetaTokenRecord;
+  }
+  return null;
+}
+
+export async function saveMetaToken(token: MetaTokenRecord) {
+  // Marcamos los tokens previos como desactivados/reemplazados
+  await query("UPDATE meta_tokens SET status = 'REPLACED', updated_at = NOW() WHERE status = 'ACTIVE'");
+
+  const sql = `
+    INSERT INTO meta_tokens (token_type, access_token, expires_at, page_id, status)
+    VALUES ($1, $2, $3, $4, $5)
+  `;
+  await query(sql, [
+    token.token_type,
+    token.access_token,
+    token.expires_at,
+    token.page_id,
+    token.status || 'ACTIVE'
+  ]);
+}
+
+export async function markTokenAsExpiringSoon(tokenId: number) {
+  const sql = `UPDATE meta_tokens SET status = 'EXPIRING_SOON', updated_at = NOW() WHERE id = $1`;
+  await query(sql, [tokenId]);
 }
 
 export async function checkExistingPublication(productId: number | string, platform: SocialPlatform): Promise<boolean> {

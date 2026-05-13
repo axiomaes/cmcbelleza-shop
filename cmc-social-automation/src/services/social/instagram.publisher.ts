@@ -1,14 +1,19 @@
 import axios from 'axios';
 import { env } from '../../config/env.js';
 import { PublishInput, PublishResult, SocialPublisher, SocialPlatform } from './social.types.js';
+import { MetaTokenService } from '../meta-token.service.js';
 
 export class InstagramPublisher implements SocialPublisher {
   readonly platform: SocialPlatform = 'instagram';
   private readonly baseUrl = 'https://graph.facebook.com/v19.0';
+  private readonly tokenService = new MetaTokenService();
 
   async publish(input: PublishInput): Promise<PublishResult> {
     try {
       console.log(`[InstagramPublisher] Iniciando publicación para producto: ${input.productName}`);
+
+      // Obtener el Token dinámico de Base de Datos
+      const token = await this.tokenService.getActiveToken();
 
       // 1. Crear el Contenedor de Media
       const containerResponse = await axios.post(
@@ -18,7 +23,7 @@ export class InstagramPublisher implements SocialPublisher {
           params: {
             image_url: input.imageUrl,
             caption: input.caption,
-            access_token: env.INSTAGRAM_ACCESS_TOKEN
+            access_token: token
           }
         }
       );
@@ -40,7 +45,7 @@ export class InstagramPublisher implements SocialPublisher {
         {
           params: {
             creation_id: creationId,
-            access_token: env.INSTAGRAM_ACCESS_TOKEN
+            access_token: token
           }
         }
       );
