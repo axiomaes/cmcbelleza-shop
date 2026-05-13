@@ -57,5 +57,19 @@
     "related": "Related Products",
     "empty": "No products found.",
     "loading": "Loading..."
+  },
+  "metadata": {
+    "title": "CMC Belleza — Natural Cosmetics & Wellness Rituals",
+    "description": "Discover our curated selection of natural cosmetics, creams and oils formulated with science and purity for your skin's wellbeing.",
+    "ogTitle": "CMC Belleza — Natural Cosmetics & Wellness",
+    "ogDescription": "Fusing cosmetic science with botanical purity to enhance your skin's integrity."
+  },
+  "errors": {
+    "not_found_title": "404 - Page Not Found",
+    "not_found_desc": "Sorry, the beauty sanctuary you are looking for is unavailable or has been moved.",
+    "back_home": "Go back home",
+    "generic_title": "Something went wrong",
+    "generic_desc": "An unexpected error has occurred while loading this experience.",
+    "retry": "Try again"
   }
 }

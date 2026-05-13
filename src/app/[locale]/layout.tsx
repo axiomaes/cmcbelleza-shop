@@ -16,21 +16,47 @@ const serif = EB_Garamond({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s | CMC Belleza',
-    default: 'CMC Belleza — Cosmética Natural y Rituales de Bienestar',
-  },
-  description: 'Descubre nuestra cuidada selección de cosméticos naturales, cremas y aceites formulados con ciencia y pureza para el bienestar de tu piel.',
-  icons: {
-    icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
-    shortcut: '/favicon.ico',
-  },
-  manifest: '/site.webmanifest',
+import { getDictionary } from "@/lib/get-dictionary";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  // Fallback en caso de que locale sea indefinido
+  const activeLocale = locale || 'es';
+  const dict = await getDictionary(activeLocale as any);
+  const meta = dict.metadata;
+
+  return {
+    title: {
+      template: '%s | CMC Belleza',
+      default: meta.title,
+    },
+    description: meta.description,
+    openGraph: {
+      title: meta.ogTitle,
+      description: meta.ogDescription,
+      url: `https://cmcbelleza.shop/${activeLocale}`,
+      siteName: 'CMC Belleza',
+      locale: activeLocale === 'en' ? 'en_US' : 'es_ES',
+      type: 'website',
+    },
+    alternates: {
+      canonical: `https://cmcbelleza.shop/${activeLocale}`,
+      languages: {
+        'es': 'https://cmcbelleza.shop/es',
+        'en': 'https://cmcbelleza.shop/en',
+        'x-default': 'https://cmcbelleza.shop/es'
+      }
+    },
+    icons: {
+      icon: [
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+      shortcut: '/favicon.ico',
+    },
+    manifest: '/site.webmanifest',
+  };
 }
 
 interface LayoutProps {

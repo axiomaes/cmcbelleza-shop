@@ -57,5 +57,19 @@
     "related": "Productos Relacionados",
     "empty": "No se encontraron productos.",
     "loading": "Cargando..."
+  },
+  "metadata": {
+    "title": "CMC Belleza — Cosmética Natural y Rituales de Bienestar",
+    "description": "Descubre nuestra cuidada selección de cosméticos naturales, cremas y aceites formulados con ciencia y pureza para el bienestar de tu piel.",
+    "ogTitle": "CMC Belleza — Cosmética Natural y Bienestar",
+    "ogDescription": "Fusionando la ciencia cosmética con la pureza botánica para potenciar la integridad de tu piel."
+  },
+  "errors": {
+    "not_found_title": "404 - Página no encontrada",
+    "not_found_desc": "Lo sentimos, el oasis que buscas no se encuentra disponible o ha cambiado de ubicación.",
+    "back_home": "Volver al inicio",
+    "generic_title": "Algo ha salido mal",
+    "generic_desc": "Ha ocurrido un error inesperado en el tratamiento de la página.",
+    "retry": "Intentar de nuevo"
   }
 }
