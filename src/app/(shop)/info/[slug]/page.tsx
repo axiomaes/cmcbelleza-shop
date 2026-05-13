@@ -1,4 +1,5 @@
 import { fetchPageBySlug } from '@/lib/woocommerce';
+import { sanitizeLegalContent } from '@/lib/sanitize';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -26,6 +27,7 @@ export default async function LegalPage({ params }: Props) {
   
   try {
     const page = await fetchPageBySlug(slug);
+    const sanitizedContent = sanitizeLegalContent(page.content.rendered);
 
     return (
       <div className="bg-white py-16 md:py-24">
@@ -39,7 +41,7 @@ export default async function LegalPage({ params }: Props) {
 
           <div 
             className="wp-content"
-            dangerouslySetInnerHTML={{ __html: page.content.rendered }}
+            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
         </div>
       </div>
