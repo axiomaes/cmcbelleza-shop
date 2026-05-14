@@ -32,38 +32,38 @@ export default async function Home({ params }: HomeProps) {
   const acf = cmsData?.acf || {};
   const isES = locale === 'es';
 
-  // Resolviendo textos Hero Dinámicos con Fallbacks a Beauty Accessories
-  const heroTitle = acf.hero_title || (isES ? "Tu Kit de Belleza Perfecto" : "Your Perfect Beauty Kit");
+  // Resolviendo textos Hero Dinámicos con Fallbacks a Moda y Accesorios
+  const heroTitle = acf.hero_title || (isES ? "Tu Estilo, Tu Esencia" : "Your Style, Your Essence");
   const heroSubtitle = acf.hero_subtitle || (isES 
-    ? "Descubre nuestra colección de brochas, esponjas y herramientas profesionales para un maquillaje impecable" 
-    : "Discover our collection of professional brushes, sponges and tools for flawless makeup");
-  const heroImage = acf.hero_image || "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&q=90";
+    ? "Pelucas, bolsos, joyas y accesorios de belleza seleccionados para la mujer moderna" 
+    : "Wigs, bags, jewelry and beauty accessories curated for the modern woman");
+  const heroImage = acf.hero_image || "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=90";
   const heroCtaText = acf.hero_cta_text || (isES ? "Ver Colección" : "Shop Now");
   const heroCtaUrl = acf.hero_cta_url || `/${locale}/tienda`;
 
   // Resolviendo Características Dinámicas
   const feature1 = {
-    icon: acf.feature_1?.feature_1_icon || "brush",
-    title: acf.feature_1?.feature_1_title || (isES ? "Calidad Profesional" : "Professional Quality"),
-    desc: acf.feature_1?.feature_1_desc || (isES ? "Herramientas usadas por maquilladores profesionales al alcance de todos" : "Tools used by professional makeup artists available for everyone")
+    icon: acf.feature_1?.feature_1_icon || "style",
+    title: acf.feature_1?.feature_1_title || (isES ? "Moda y Belleza" : "Fashion & Beauty"),
+    desc: acf.feature_1?.feature_1_desc || (isES ? "Todo lo que necesitas para expresar tu estilo en un solo lugar" : "Everything you need to express your style in one place")
   };
   const feature2 = {
-    icon: acf.feature_2?.feature_2_icon || "spa",
-    title: acf.feature_2?.feature_2_title || (isES ? "Suave con tu Piel" : "Gentle on Your Skin"),
-    desc: acf.feature_2?.feature_2_desc || (isES ? "Materiales de alta calidad que cuidan tu piel mientras te maquillas" : "High quality materials that care for your skin while you apply makeup")
+    icon: acf.feature_2?.feature_2_icon || "local_shipping",
+    title: acf.feature_2?.feature_2_title || (isES ? "Envío a USA" : "Fast US Shipping"),
+    desc: acf.feature_2?.feature_2_desc || (isES ? "Entrega rápida en todo Estados Unidos e internacional" : "Quick delivery across the United States and internationally")
   };
   const feature3 = {
-    icon: acf.feature_3?.feature_3_icon || "local_shipping",
-    title: acf.feature_3?.feature_3_title || (isES ? "Envío a USA" : "Fast US Shipping"),
-    desc: acf.feature_3?.feature_3_desc || (isES ? "Entrega rápida en todo Estados Unidos y envíos internacionales disponibles" : "Quick delivery across the United States with international shipping available")
+    icon: acf.feature_3?.feature_3_icon || "verified",
+    title: acf.feature_3?.feature_3_title || (isES ? "Calidad Garantizada" : "Quality Guaranteed"),
+    desc: acf.feature_3?.feature_3_desc || (isES ? "Productos seleccionados y verificados para asegurar tu satisfacción" : "Carefully selected and verified products for your satisfaction")
   };
 
-  // Nuevas Categorías Reales (Accesorios de Belleza)
+  // Nuevas Categorías Reales (Moda y Cabello)
   const categories = [
-    { id: 'brushes', name: isES ? 'Brochas' : 'Brushes', img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80', path: '/categoria/brushes' },
-    { id: 'sponges', name: isES ? 'Esponjas y Aplicadores' : 'Sponges & Applicators', img: 'https://images.unsplash.com/photo-1583241475879-da37a892d74e?w=800&q=80', path: '/categoria/sponges' },
-    { id: 'sets-kits', name: isES ? 'Sets y Kits' : 'Sets & Kits', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80', path: '/categoria/sets-kits' },
-    { id: 'tips-rutinas', name: isES ? 'Guías y Tips' : 'Guides & Tips', img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80', path: '/tips' }
+    { id: 'wigs', name: isES ? 'Pelucas y Cabello' : 'Wigs & Hair', img: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80', path: '/categoria/wigs' },
+    { id: 'bags', name: isES ? 'Bolsos y Carteras' : 'Bags & Purses', img: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80', path: '/categoria/bags' },
+    { id: 'jewelry', name: isES ? 'Joyería y Relojes' : 'Jewelry & Watches', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80', path: '/categoria/jewelry' },
+    { id: 'clothing', name: isES ? 'Ropa y Tendencias' : 'Clothing & Trends', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80', path: '/categoria/clothing' }
   ];
 
   return (
@@ -115,8 +115,8 @@ export default async function Home({ params }: HomeProps) {
               </div>
               <p className="text-on-surface-variant text-sm">
                 {isES 
-                  ? "Herramientas seleccionadas bajo estrictos controles de calidad profesional." 
-                  : "Premium-selected tools under strict professional quality control."
+                  ? "Productos seleccionados bajo estrictos controles de calidad y estilo." 
+                  : "Premium-selected products under strict quality and style control."
                 }
               </p>
             </div>
@@ -173,8 +173,8 @@ export default async function Home({ params }: HomeProps) {
             </h2>
             <p className="text-on-surface-variant">
               {isES 
-                ? "Selección rigurosa de las herramientas que están transformando acabados en todo el mundo." 
-                : "Rigorous selection of tools transforming finishes worldwide."
+                ? "Selección rigurosa de prendas y accesorios que marcan tendencia en todo el mundo." 
+                : "Rigorous selection of trending pieces and accessories worldwide."
               }
             </p>
           </div>

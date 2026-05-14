@@ -3,7 +3,7 @@
     "home": "Home",
     "shop": "Shop",
     "blog": "Blog",
-    "tips": "Guides & Tips"
+    "tips": "Style & Tips"
   },
   "footer": {
     "explore": "Explore",
@@ -15,8 +15,8 @@
     "terms": "Terms",
     "hours": "Customer Service: Mon to Fri",
     "location": "USA",
-    "slogan": "Professional quality, flawless finish.",
-    "description": "High-end makeup tools and accessories designed to enhance your daily style with ease.",
+    "slogan": "Fashion, style and confidence for you.",
+    "description": "Your premium women's fashion store. Wigs, bags, jewelry and accessories curated for the modern woman.",
     "slugs": {
       "notice": "legal-notice",
       "privacy": "privacy-policy",
@@ -25,30 +25,30 @@
     }
   },
   "tips": {
-    "hero_badge": "Your Beauty Guide",
-    "hero_title": "The Art of Makeup",
-    "hero_desc": "The key to a flawless finish is not just the makeup, but the quality of the brushes and tools you use.",
-    "finder_title": "Find your ideal kit",
-    "finder_desc": "What is your makeup goal today?",
+    "hero_badge": "Your Style Guide",
+    "hero_title": "Express Your Essence",
+    "hero_desc": "From wig maintenance to pairing the perfect bag and jewelry. Learn how to elevate your everyday look.",
+    "finder_title": "Find your ideal look",
+    "finder_desc": "What part of your style do you want to elevate today?",
     "skin_types": {
-      "seca": "Full Face",
-      "grasa": "Eyes & Brows",
-      "mixta": "Contouring & Highlight",
-      "sensible": "Natural Finish",
-      "madura": "Complete Sets"
+      "seca": "Wigs & Hair",
+      "grasa": "Bags & Fashion",
+      "mixta": "Jewelry & Details",
+      "sensible": "Clothing & Outfits",
+      "madura": "Full Collection"
     },
-    "ritual_steps": "Application Steps",
-    "btn_view_products": "View Recommended Tools",
+    "ritual_steps": "Style Steps",
+    "btn_view_products": "Explore Collection",
     "routines": [
       {
-        "title": "Brush Care Routine",
-        "desc": "Keep your tools spotless for a flawless finish and healthy skin.",
-        "steps": ["Gentle Wash with Mild Soap", "Rinse with Lukewarm Water", "Dry Flat on a Surface", "Quick Sanitizing Spray (optional)"]
+        "title": "Wig & Extension Care",
+        "desc": "Keep your synthetic or natural hair glowing and soft for longer.",
+        "steps": ["Gentle Detangling", "Wash with Cold Water", "Hydration with Special Conditioner", "Air Drying"]
       },
       {
-        "title": "Flawless Base Application",
-        "desc": "Achieve perfect skin step-by-step using the right tools.",
-        "steps": ["Preparation with Damp Sponge", "Buffing with Kabuki Brush", "Details with Precision Concealer", "Setting with Powder Brush"]
+        "title": "The Art of Accessorizing",
+        "desc": "Find the perfect balance between your bag, jewelry, and outfit.",
+        "steps": ["Choose a Focal Piece", "Harmonize Colors", "Consider the Occasion", "Add Confidence & Attitude"]
       }
     ]
   },
@@ -59,17 +59,17 @@
     "loading": "Loading..."
   },
   "metadata": {
-    "title": "CMC Belleza — Professional Makeup Brushes, Sponges & Beauty Tools",
-    "description": "Shop professional makeup brushes, sponges and beauty accessories. Fast US shipping and worldwide delivery.",
-    "ogTitle": "CMC Belleza — Makeup Brushes & Beauty Tools",
-    "ogDescription": "Shop our collection of professional makeup brushes, sponges and accessories for a flawless look."
+    "title": "CMC Belleza — Women's Fashion, Wigs, Bags & Beauty Accessories",
+    "description": "Online fashion and beauty store for women. Wigs, bags, jewelry and accessories with fast US shipping worldwide.",
+    "ogTitle": "CMC Belleza — Women's Fashion & Accessories",
+    "ogDescription": "Discover our exclusive collection of wigs, bags, and fashion accessories for today's woman."
   },
   "errors": {
     "not_found_title": "404 - Page Not Found",
-    "not_found_desc": "Sorry, the tool or page you are looking for is unavailable or has been moved.",
+    "not_found_desc": "Sorry, the page or item you are looking for is unavailable or has been moved.",
     "back_home": "Go back home",
     "generic_title": "Something went wrong",
-    "generic_desc": "An unexpected error has occurred while loading this experience.",
+    "generic_desc": "An unexpected error has occurred while loading this section.",
     "retry": "Try again"
   }
 }

@@ -3,7 +3,7 @@
     "home": "Inicio",
     "shop": "Tienda",
     "blog": "Blog",
-    "tips": "Guías y Tips"
+    "tips": "Estilo & Tips"
   },
   "footer": {
     "explore": "Explorar",
@@ -15,8 +15,8 @@
     "terms": "Términos",
     "hours": "Atención al cliente: Lunes a Viernes",
     "location": "USA",
-    "slogan": "Calidad profesional, acabado impecable.",
-    "description": "Herramientas y accesorios de maquillaje de alta gama diseñados para potenciar tu estilo en el día a día.",
+    "slogan": "Moda, estilo y confianza para ti.",
+    "description": "Tu tienda de moda femenina premium. Pelucas, bolsos, joyas y accesorios seleccionados para la mujer moderna.",
     "slugs": {
       "notice": "aviso-legal",
       "privacy": "politica-privacidad",
@@ -25,30 +25,30 @@
     }
   },
   "tips": {
-    "hero_badge": "Tu Guía de Belleza",
-    "hero_title": "El Arte del Maquillaje",
-    "hero_desc": "La clave de un acabado impecable no es solo el maquillaje, sino la calidad de las brochas y herramientas que utilizas.",
-    "finder_title": "Encuentra tu kit ideal",
-    "finder_desc": "¿Cuál es tu objetivo de maquillaje de hoy?",
+    "hero_badge": "Tu Guía de Estilo",
+    "hero_title": "Expresa Tu Esencia",
+    "hero_desc": "Desde el cuidado de tus pelucas hasta la combinación perfecta de bolsos y joyas. Descubre cómo potenciar tu estilo diario.",
+    "finder_title": "Encuentra tu look ideal",
+    "finder_desc": "¿Qué aspecto quieres potenciar hoy?",
     "skin_types": {
-      "seca": "Rostro Completo",
-      "grasa": "Ojos y Cejas",
-      "mixta": "Contorno e Iluminación",
-      "sensible": "Acabado Natural",
-      "madura": "Sets Completos"
+      "seca": "Pelucas y Cabello",
+      "grasa": "Bolsos y Moda",
+      "mixta": "Joyas y Detalles",
+      "sensible": "Ropa y Outfits",
+      "madura": "Colección Completa"
     },
-    "ritual_steps": "Pasos de Aplicación",
-    "btn_view_products": "Ver Herramientas Recomendadas",
+    "ritual_steps": "Pasos de Estilo",
+    "btn_view_products": "Explorar la Colección",
     "routines": [
       {
-        "title": "Rutina de Cuidado de Brochas",
-        "desc": "Mantén tus herramientas impecables para un acabado perfecto y una piel sana.",
-        "steps": ["Lavado Suave con Jabón Neutro", "Enjuague con Agua Tibia", "Secado en Superficie Plana", "Desinfección Rápida (opcional)"]
+        "title": "Cuidado de Pelucas y Extensiones",
+        "desc": "Mantén el brillo y suavidad de tu cabello sintético o natural por más tiempo.",
+        "steps": ["Desenredado Suave", "Lavado con Agua Fría", "Hidratación con Acondicionador Especial", "Secado al Aire Libre"]
       },
       {
-        "title": "Aplicación de Base Impecable",
-        "desc": "Logra una piel perfecta paso a paso con las herramientas adecuadas.",
-        "steps": ["Preparación con Esponja Húmeda", "Difuminado con Brocha Kabuki", "Detalles con Corrector de Precisión", "Sellado con Brocha de Polvos"]
+        "title": "El Arte de Combinar Accesorios",
+        "desc": "Logra el equilibrio perfecto entre tu bolso, joyas y outfit.",
+        "steps": ["Elige una Pieza Central", "Armoniza los Colores", "Considera la Ocasión", "Añade Confianza y Actitud"]
       }
     ]
   },
@@ -59,17 +59,17 @@
     "loading": "Cargando..."
   },
   "metadata": {
-    "title": "CMC Belleza — Accesorios y Herramientas de Maquillaje Profesional",
-    "description": "Descubre brochas, esponjas y accesorios de belleza profesionales. Envíos a USA y todo el mundo.",
-    "ogTitle": "CMC Belleza — Accesorios y Herramientas de Maquillaje",
-    "ogDescription": "Descubre nuestra colección de brochas, esponjas y herramientas de maquillaje para un acabado profesional."
+    "title": "CMC Belleza — Moda, Pelucas, Bolsos y Accesorios para Mujer",
+    "description": "Tienda online de moda y belleza femenina. Pelucas, bolsos, joyas y accesorios con envío a USA y todo el mundo.",
+    "ogTitle": "CMC Belleza — Moda y Accesorios Femeninos",
+    "ogDescription": "Descubre nuestra colección exclusiva de pelucas, bolsos y complementos de moda para la mujer de hoy."
   },
   "errors": {
     "not_found_title": "404 - Página no encontrada",
-    "not_found_desc": "Lo sentimos, la herramienta o página que buscas no se encuentra disponible o ha cambiado de ubicación.",
+    "not_found_desc": "Lo sentimos, la página o prenda que buscas no se encuentra disponible o ha cambiado de ubicación.",
     "back_home": "Volver al inicio",
     "generic_title": "Algo ha salido mal",
-    "generic_desc": "Ha ocurrido un error inesperado en el tratamiento de la página.",
+    "generic_desc": "Ha ocurrido un error inesperado al cargar esta sección.",
     "retry": "Intentar de nuevo"
   }
 }
