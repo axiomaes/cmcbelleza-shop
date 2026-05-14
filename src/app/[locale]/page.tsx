@@ -19,12 +19,25 @@ export default async function Home({ params }: HomeProps) {
   let cmsData = null;
 
   try {
+    // Intento 1: Carga inicial con destacados e idioma solicitado
     const [prodRes, cmsRes] = await Promise.all([
       fetchProducts({ featured: true, per_page: 8, lang: locale }),
       getPageContent('home', locale)
     ]);
     products = prodRes;
     cmsData = cmsRes;
+
+    // Fallback 1: Si no hay productos marcados como "destacados", cargar productos recientes
+    if (products.length === 0) {
+      console.warn(`[Home Page] No featured products found for "${locale}". Loading latest products as fallback.`);
+      products = await fetchProducts({ per_page: 8, lang: locale });
+    }
+
+    // Fallback 2: Si sigue vacío, intentar cargar últimos productos sin filtro de idioma (para evitar Home vacía)
+    if (products.length === 0) {
+      console.warn(`[Home Page] No localized products found for "${locale}". Loading absolute latest products.`);
+      products = await fetchProducts({ per_page: 8 });
+    }
   } catch (error) {
     console.error("Home Page Async Fetch Error:", error);
   }
@@ -183,8 +196,8 @@ export default async function Home({ params }: HomeProps) {
             {products.length > 0 ? (
               <ProductSlider products={products} />
             ) : (
-              <div className="text-center py-12 text-on-surface-variant italic">
-                {isES ? "Cargando selección..." : "Loading selection..."}
+              <div className="text-center py-12 text-on-surface-variant/70 italic border border-dashed border-outline/30 rounded-2xl bg-surface-container-lowest">
+                {isES ? "No se encontraron productos en este momento." : "No products found at this time."}
               </div>
             )}
           </div>

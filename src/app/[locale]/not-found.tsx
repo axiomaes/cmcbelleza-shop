@@ -1,14 +1,16 @@
+'use client';
+
 import Link from 'next/link';
-import { getDictionary } from '@/lib/get-dictionary';
+import { useParams } from 'next/navigation';
+import esDict from '../../messages/es.json';
+import enDict from '../../messages/en.json';
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
+export default function NotFound() {
+  const params = useParams();
+  const locale = (params?.locale as string) || 'es';
+  const activeLocale = locale === 'en' ? 'en' : 'es';
 
-export default async function NotFound({ params }: Props) {
-  const { locale } = await params;
-  const activeLocale = locale || 'es';
-  const dict = await getDictionary(activeLocale as any);
+  const dict = activeLocale === 'en' ? enDict : esDict;
   const err = dict.errors;
 
   return (
@@ -19,14 +21,14 @@ export default async function NotFound({ params }: Props) {
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
         
         <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6 relative z-10">
-          <span className="material-symbols-outlined text-5xl animate-pulse">spa</span>
+          <span className="material-symbols-outlined text-5xl animate-pulse">shopping_bag</span>
         </div>
         
         <h1 className="text-3xl md:text-4xl font-serif text-on-surface font-semibold tracking-tight mb-4 relative z-10">
           {err.not_found_title}
         </h1>
         
-        <p className="text-dark-muted text-base md:text-lg leading-relaxed mb-8 max-w-sm relative z-10">
+        <p className="text-on-surface-variant text-base md:text-lg leading-relaxed mb-8 max-w-sm relative z-10">
           {err.not_found_desc}
         </p>
         
