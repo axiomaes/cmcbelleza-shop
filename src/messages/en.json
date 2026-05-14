@@ -14,14 +14,14 @@
     "cookies": "Cookies",
     "terms": "Terms",
     "hours": "Customer Service: Mon to Fri",
-    "location": "Madrid, Spain",
+    "location": "USA",
     "slogan": "Scientific purity, natural beauty.",
     "description": "Fusing cosmetic science with botanical purity to enhance your skin's integrity.",
     "slugs": {
-      "notice": "2038-2",
-      "privacy": "2038-2",
-      "cookies": "2038-2",
-      "terms": "2038-2"
+      "notice": "legal-notice",
+      "privacy": "privacy-policy",
+      "cookies": "cookie-policy",
+      "terms": "terms-and-conditions"
     }
   },
   "tips": {

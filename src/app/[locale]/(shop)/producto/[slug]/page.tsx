@@ -18,11 +18,11 @@ export const revalidate = 3600; // 1 hour
 
 function formatPrice(price: string): string {
   const num = parseFloat(price);
-  if (isNaN(num)) return price + ' €';
-  return new Intl.NumberFormat('es-ES', {
+  if (isNaN(num)) return '$' + price;
+  return '$' + new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(num) + ' €';
+  }).format(num);
 }
 
 export async function generateStaticParams() {
@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 text-sm text-dark-muted font-medium">
                 <CheckCircle size={18} className="text-primary" />
-                <span>Envío 24/48h garantizado</span>
+                <span>{locale === 'es' ? 'Envío estándar a todo USA' : 'Standard US Shipping'}</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-dark-muted font-medium">
                 <CheckCircle size={18} className="text-primary" />
@@ -154,7 +154,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
           
           <p className="mt-6 text-xs text-dark-muted/60 italic">
-            * Los precios incluyen IVA. Gastos de envío calculados en el checkout.
+            * {locale === 'es' ? 'Impuestos y gastos de envío calculados en el checkout.' : 'Taxes and shipping calculated at checkout.'}
           </p>
 
           {/* Texture Slider Interactive Module */}

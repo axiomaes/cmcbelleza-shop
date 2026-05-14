@@ -47,12 +47,11 @@ const MiniCart = () => {
                   )}
                 </div>
                 <div className="flex-1 pr-4">
-                  <h4 className="text-xs font-semibold text-dark line-clamp-1">{item.name}</h4>
-                  <p className="text-[10px] text-dark-muted">Cant: {item.quantity} x {item.price.toFixed(2)} €</p>
+                  <p className="text-[10px] text-dark-muted">Cant: {item.quantity} x ${item.price.toFixed(2)}</p>
                 </div>
                 <div className="text-right flex flex-col items-end gap-1">
                   <span className="font-bold text-secondary text-xs">
-                    {(item.price * item.quantity).toFixed(2)} €
+                    ${(item.price * item.quantity).toFixed(2)}
                   </span>
                   <button 
                     onClick={() => removeItem(item.productId)}
@@ -68,8 +67,7 @@ const MiniCart = () => {
 
         <div className="p-4 bg-gray-50 border-t border-gray-100">
           <div className="flex justify-between items-center mb-4">
-            <span className="text-dark font-medium">Subtotal:</span>
-            <span className="text-xl font-bold text-secondary">{total.toFixed(2)} €</span>
+            <span className="text-xl font-bold text-secondary">${total.toFixed(2)}</span>
           </div>
           <Link href="/carrito" onClick={() => toggleCart(false)}>
             <Button variant="primary" fullWidth className="py-3 text-sm">

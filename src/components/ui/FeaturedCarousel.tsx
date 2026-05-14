@@ -56,7 +56,7 @@ export default function FeaturedCarousel({ products }: { products: Product[] }) 
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
               <div className="text-white max-w-xl">
                 <h3 className="text-2xl md:text-3xl font-bold mb-2 line-clamp-2">{product.name}</h3>
-                <p className="text-xl md:text-2xl font-semibold text-primary/90">{Number(product.price).toFixed(2)} €</p>
+                <p className="text-xl md:text-2xl font-semibold text-primary/90">${Number(product.price).toFixed(2)}</p>
               </div>
               <Link 
                 href={`/producto/${product.slug}`} 

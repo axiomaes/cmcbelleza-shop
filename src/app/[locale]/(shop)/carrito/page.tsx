@@ -127,7 +127,7 @@ export default function CarritoPage() {
                   {item.name}
                 </Link>
                 <p className="text-xl font-black text-secondary mt-2">
-                  {item.price.toFixed(2)} €
+                  ${item.price.toFixed(2)}
                 </p>
               </div>
 
@@ -179,7 +179,7 @@ export default function CarritoPage() {
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between items-center text-dark-muted font-medium">
                   <span>Subtotal</span>
-                  <span>{subtotal.toFixed(2)} €</span>
+                  <span>${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center text-dark-muted font-medium">
                   <span>Envío</span>
@@ -188,7 +188,7 @@ export default function CarritoPage() {
                 <div className="pt-4 mt-4 border-t border-gray-50 flex justify-between items-center text-dark leading-none">
                   <span className="text-xl font-bold text-dark">Total</span>
                   <span className="text-3xl font-black text-secondary">
-                    {subtotal.toFixed(2)} €
+                    ${subtotal.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function CarritoPage() {
                 <div className="pt-4 border-t border-gray-50 mt-6">
                    <div className="flex justify-between items-center mb-6">
                       <span className="font-bold text-dark">Total a pagar:</span>
-                      <span className="text-2xl font-black text-secondary font-mono">{subtotal.toFixed(2)} €</span>
+                      <span className="text-2xl font-black text-secondary font-mono">${subtotal.toFixed(2)}</span>
                    </div>
                    
                    <Button 

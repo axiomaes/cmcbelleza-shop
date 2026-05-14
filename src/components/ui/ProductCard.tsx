@@ -13,11 +13,11 @@ interface ProductCardProps {
 
 function formatPrice(price: string): string {
   const num = parseFloat(price);
-  if (isNaN(num)) return price + ' €';
-  return new Intl.NumberFormat('es-ES', {
+  if (isNaN(num)) return '$' + price;
+  return '$' + new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(num) + ' €';
+  }).format(num);
 }
 
 const ProductCard = ({ product, priority = false }: ProductCardProps) => {

@@ -89,7 +89,7 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
           <div className="mb-8">
             <label htmlFor="price" className="flex justify-between text-sm font-semibold text-dark-muted mb-3 font-sans">
               <span>Precio máximo</span>
-              <span className="text-secondary font-bold font-mono">{maxPrice} €</span>
+              <span className="text-secondary font-bold font-mono">${maxPrice}</span>
             </label>
             <input
               type="range"
@@ -101,8 +101,8 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
               className="w-full accent-primary h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer"
             />
             <div className="flex justify-between mt-2 text-[10px] text-dark-muted font-bold opacity-50">
-              <span>0 €</span>
-              <span>{maxInitialPrice} €</span>
+              <span>$0</span>
+              <span>${maxInitialPrice}</span>
             </div>
           </div>
 
