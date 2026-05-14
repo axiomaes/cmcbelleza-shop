@@ -28,56 +28,64 @@ interface PageParams {
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
   const { locale, slug } = await params;
   
-  // Intentar cargar data
-  const pageData = await getPageContent(slug, locale);
-  
-  if (!pageData) {
+  try {
+    // Intentar cargar data
+    const pageData = await getPageContent(slug, locale);
+    
+    if (!pageData) {
+      return {
+        title: 'Página no encontrada | CMC Belleza',
+      };
+    }
+
+    // Mapeo inteligente del título
+    let seoTitle = pageData.title ? `${pageData.title} | CMC Belleza` : 'CMC Belleza';
+    let seoDesc = 'Descubre la alta cosmética orgánica de CMC Belleza.';
+
+    // Sobreescribir con campos ACF si existen en plantillas conocidas
+    const acf = pageData.acf;
+    if (acf) {
+      if (acf.hero_title) seoTitle = `${acf.hero_title} | CMC Belleza`;
+      if (acf.about_title) seoTitle = `${acf.about_title} | CMC Belleza`;
+      if (acf.hero_subtitle) seoDesc = acf.hero_subtitle;
+      if (acf.about_subtitle) seoDesc = acf.about_subtitle;
+    }
+
+    return {
+      title: seoTitle,
+      description: seoDesc.substring(0, 160),
+      openGraph: {
+        title: seoTitle,
+        description: seoDesc.substring(0, 160),
+        type: 'article',
+      }
+    };
+  } catch (err) {
+    console.error("[generateMetadata CMS Error]", err);
     return {
       title: 'Página no encontrada | CMC Belleza',
     };
   }
-
-  // Mapeo inteligente del título
-  let seoTitle = pageData.title ? `${pageData.title} | CMC Belleza` : 'CMC Belleza';
-  let seoDesc = 'Descubre la alta cosmética orgánica de CMC Belleza.';
-
-  // Sobreescribir con campos ACF si existen en plantillas conocidas
-  const acf = pageData.acf;
-  if (acf) {
-    if (acf.hero_title) seoTitle = `${acf.hero_title} | CMC Belleza`;
-    if (acf.about_title) seoTitle = `${acf.about_title} | CMC Belleza`;
-    if (acf.hero_subtitle) seoDesc = acf.hero_subtitle;
-    if (acf.about_subtitle) seoDesc = acf.about_subtitle;
-  }
-
-  return {
-    title: seoTitle,
-    description: seoDesc.substring(0, 160),
-    openGraph: {
-      title: seoTitle,
-      description: seoDesc.substring(0, 160),
-      type: 'article',
-    }
-  };
 }
 
-/**
- * Slugs estáticos pre-renderizados conocidos para agilizar primer TTI
- */
 export async function generateStaticParams() {
-  // Slugs recurrentes que garantizamos en el build
-  return [
-    { locale: 'es', slug: 'nosotros' },
-    { locale: 'en', slug: 'about' },
-    { locale: 'es', slug: 'contacto' }
-  ];
+  // Retornamos vacío para posponer la generación de páginas estáticas a runtime vía ISR.
+  // Esto soluciona bloqueos críticos en build-time cuando el CMS no está disponible.
+  return [];
 }
 
 export default async function Page({ params }: PageParams) {
   const { locale, slug } = await params;
   
-  // MÓDULO 5: Intento de Fetch con fallback automático ES incluido en la lib
-  const pageData = await getPageContent(slug, locale);
+  let pageData = null;
+
+  try {
+    // MÓDULO 5: Intento de Fetch con fallback automático ES incluido en la lib
+    pageData = await getPageContent(slug, locale);
+  } catch (error) {
+    console.error("[CMS Render Page Error]", error);
+    notFound();
+  }
 
   // MÓDULO 5: Si tras el fallback sigue devolviendo null, lanzamos 404 localizado nativo
   if (!pageData) {
