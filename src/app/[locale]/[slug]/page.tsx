@@ -22,6 +22,17 @@ interface PageParams {
   }>;
 }
 
+// Mapeo de rutas amigables de Next.js a los slugs canónicos de WordPress
+const slugMapping: Record<string, string> = {
+  'nosotros': 'about',
+  'contacto': 'contact',
+  'acerca-de': 'about', // Fallback preventivo
+};
+
+function getWPSlug(routeSlug: string): string {
+  return slugMapping[routeSlug.toLowerCase()] || routeSlug;
+}
+
 /**
  * Generación de Metadatos SEO Dinámicos desde los campos SCF/ACF
  */
@@ -29,8 +40,9 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   const { locale, slug } = await params;
   
   try {
+    const wpSlug = getWPSlug(slug);
     // Intentar cargar data
-    const pageData = await getPageContent(slug, locale);
+    const pageData = await getPageContent(wpSlug, locale);
     
     if (!pageData) {
       return {
@@ -80,8 +92,9 @@ export default async function Page({ params }: PageParams) {
   let pageData = null;
 
   try {
+    const wpSlug = getWPSlug(slug);
     // MÓDULO 5: Intento de Fetch con fallback automático ES incluido en la lib
-    pageData = await getPageContent(slug, locale);
+    pageData = await getPageContent(wpSlug, locale);
   } catch (error) {
     console.error("[CMS Render Page Error]", error);
     notFound();
