@@ -3,7 +3,7 @@
     "home": "Inicio",
     "shop": "Tienda",
     "blog": "Blog",
-    "tips": "Tips & Rutinas"
+    "tips": "Guías y Tips"
   },
   "footer": {
     "explore": "Explorar",
@@ -15,8 +15,8 @@
     "terms": "Términos",
     "hours": "Atención al cliente: Lunes a Viernes",
     "location": "USA",
-    "slogan": "Pureza científica, belleza natural.",
-    "description": "Fusionando la ciencia cosmética con la pureza botánica para potenciar la integridad de tu piel.",
+    "slogan": "Calidad profesional, acabado impecable.",
+    "description": "Herramientas y accesorios de maquillaje de alta gama diseñados para potenciar tu estilo en el día a día.",
     "slugs": {
       "notice": "aviso-legal",
       "privacy": "politica-privacidad",
@@ -25,30 +25,30 @@
     }
   },
   "tips": {
-    "hero_badge": "Tu Guía de Bienestar",
-    "hero_title": "Tips y Rutinas Conscientes",
-    "hero_desc": "La clave de una piel radiante no es la cantidad de productos, sino la constancia y la escucha de tus necesidades botánicas.",
-    "finder_title": "Encuentra tu rutina ideal",
-    "finder_desc": "¿Cuál es tu tipo de piel predominante?",
+    "hero_badge": "Tu Guía de Belleza",
+    "hero_title": "El Arte del Maquillaje",
+    "hero_desc": "La clave de un acabado impecable no es solo el maquillaje, sino la calidad de las brochas y herramientas que utilizas.",
+    "finder_title": "Encuentra tu kit ideal",
+    "finder_desc": "¿Cuál es tu objetivo de maquillaje de hoy?",
     "skin_types": {
-      "seca": "Seca",
-      "grasa": "Grasa",
-      "mixta": "Mixta",
-      "sensible": "Sensible",
-      "madura": "Madura"
+      "seca": "Rostro Completo",
+      "grasa": "Ojos y Cejas",
+      "mixta": "Contorno e Iluminación",
+      "sensible": "Acabado Natural",
+      "madura": "Sets Completos"
     },
-    "ritual_steps": "Pasos del Ritual",
-    "btn_view_products": "Ver Productos Recomendados",
+    "ritual_steps": "Pasos de Aplicación",
+    "btn_view_products": "Ver Herramientas Recomendadas",
     "routines": [
       {
-        "title": "Rutina Matutina Vitalidad",
-        "desc": "Prepara y protege tu piel para afrontar el día.",
-        "steps": ["Limpiador Suave", "Tónico Antioxidante", "Sérum Vitamina C", "Crema Hidratante + SPF"]
+        "title": "Rutina de Cuidado de Brochas",
+        "desc": "Mantén tus herramientas impecables para un acabado perfecto y una piel sana.",
+        "steps": ["Lavado Suave con Jabón Neutro", "Enjuague con Agua Tibia", "Secado en Superficie Plana", "Desinfección Rápida (opcional)"]
       },
       {
-        "title": "Ritual Nocturno Regenerador",
-        "desc": "Repara el daño acumulado y estimula la renovación celular.",
-        "steps": ["Doble Limpieza", "Tónico Exfoliante (2 veces/semana)", "Aceite Facial o Tratamiento", "Contorno y Crema Nutritiva"]
+        "title": "Aplicación de Base Impecable",
+        "desc": "Logra una piel perfecta paso a paso con las herramientas adecuadas.",
+        "steps": ["Preparación con Esponja Húmeda", "Difuminado con Brocha Kabuki", "Detalles con Corrector de Precisión", "Sellado con Brocha de Polvos"]
       }
     ]
   },
@@ -59,14 +59,14 @@
     "loading": "Cargando..."
   },
   "metadata": {
-    "title": "CMC Belleza — Cosmética Natural y Rituales de Bienestar",
-    "description": "Descubre nuestra cuidada selección de cosméticos naturales, cremas y aceites formulados con ciencia y pureza para el bienestar de tu piel.",
-    "ogTitle": "CMC Belleza — Cosmética Natural y Bienestar",
-    "ogDescription": "Fusionando la ciencia cosmética con la pureza botánica para potenciar la integridad de tu piel."
+    "title": "CMC Belleza — Accesorios y Herramientas de Maquillaje Profesional",
+    "description": "Descubre brochas, esponjas y accesorios de belleza profesionales. Envíos a USA y todo el mundo.",
+    "ogTitle": "CMC Belleza — Accesorios y Herramientas de Maquillaje",
+    "ogDescription": "Descubre nuestra colección de brochas, esponjas y herramientas de maquillaje para un acabado profesional."
   },
   "errors": {
     "not_found_title": "404 - Página no encontrada",
-    "not_found_desc": "Lo sentimos, el oasis que buscas no se encuentra disponible o ha cambiado de ubicación.",
+    "not_found_desc": "Lo sentimos, la herramienta o página que buscas no se encuentra disponible o ha cambiado de ubicación.",
     "back_home": "Volver al inicio",
     "generic_title": "Algo ha salido mal",
     "generic_desc": "Ha ocurrido un error inesperado en el tratamiento de la página.",

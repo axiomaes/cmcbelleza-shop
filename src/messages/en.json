@@ -3,7 +3,7 @@
     "home": "Home",
     "shop": "Shop",
     "blog": "Blog",
-    "tips": "Tips & Routines"
+    "tips": "Guides & Tips"
   },
   "footer": {
     "explore": "Explore",
@@ -15,8 +15,8 @@
     "terms": "Terms",
     "hours": "Customer Service: Mon to Fri",
     "location": "USA",
-    "slogan": "Scientific purity, natural beauty.",
-    "description": "Fusing cosmetic science with botanical purity to enhance your skin's integrity.",
+    "slogan": "Professional quality, flawless finish.",
+    "description": "High-end makeup tools and accessories designed to enhance your daily style with ease.",
     "slugs": {
       "notice": "legal-notice",
       "privacy": "privacy-policy",
@@ -25,30 +25,30 @@
     }
   },
   "tips": {
-    "hero_badge": "Your Wellbeing Guide",
-    "hero_title": "Mindful Tips & Routines",
-    "hero_desc": "The key to radiant skin is not the quantity of products, but consistency and listening to your botanical needs.",
-    "finder_title": "Find your ideal routine",
-    "finder_desc": "What is your predominant skin type?",
+    "hero_badge": "Your Beauty Guide",
+    "hero_title": "The Art of Makeup",
+    "hero_desc": "The key to a flawless finish is not just the makeup, but the quality of the brushes and tools you use.",
+    "finder_title": "Find your ideal kit",
+    "finder_desc": "What is your makeup goal today?",
     "skin_types": {
-      "seca": "Dry",
-      "grasa": "Oily",
-      "mixta": "Combination",
-      "sensible": "Sensitive",
-      "madura": "Mature"
+      "seca": "Full Face",
+      "grasa": "Eyes & Brows",
+      "mixta": "Contouring & Highlight",
+      "sensible": "Natural Finish",
+      "madura": "Complete Sets"
     },
-    "ritual_steps": "Ritual Steps",
-    "btn_view_products": "View Recommended Products",
+    "ritual_steps": "Application Steps",
+    "btn_view_products": "View Recommended Tools",
     "routines": [
       {
-        "title": "Morning Vitality Routine",
-        "desc": "Prepare and protect your skin to face the day.",
-        "steps": ["Gentle Cleanser", "Antioxidant Toner", "Vitamin C Serum", "Moisturizer + SPF"]
+        "title": "Brush Care Routine",
+        "desc": "Keep your tools spotless for a flawless finish and healthy skin.",
+        "steps": ["Gentle Wash with Mild Soap", "Rinse with Lukewarm Water", "Dry Flat on a Surface", "Quick Sanitizing Spray (optional)"]
       },
       {
-        "title": "Nighttime Regenerating Ritual",
-        "desc": "Repair accumulated damage and stimulate cell renewal.",
-        "steps": ["Double Cleansing", "Exfoliating Toner (twice a week)", "Facial Oil or Treatment", "Eye Contour & Nourishing Cream"]
+        "title": "Flawless Base Application",
+        "desc": "Achieve perfect skin step-by-step using the right tools.",
+        "steps": ["Preparation with Damp Sponge", "Buffing with Kabuki Brush", "Details with Precision Concealer", "Setting with Powder Brush"]
       }
     ]
   },
@@ -59,14 +59,14 @@
     "loading": "Loading..."
   },
   "metadata": {
-    "title": "CMC Belleza — Natural Cosmetics & Wellness Rituals",
-    "description": "Discover our curated selection of natural cosmetics, creams and oils formulated with science and purity for your skin's wellbeing.",
-    "ogTitle": "CMC Belleza — Natural Cosmetics & Wellness",
-    "ogDescription": "Fusing cosmetic science with botanical purity to enhance your skin's integrity."
+    "title": "CMC Belleza — Professional Makeup Brushes, Sponges & Beauty Tools",
+    "description": "Shop professional makeup brushes, sponges and beauty accessories. Fast US shipping and worldwide delivery.",
+    "ogTitle": "CMC Belleza — Makeup Brushes & Beauty Tools",
+    "ogDescription": "Shop our collection of professional makeup brushes, sponges and accessories for a flawless look."
   },
   "errors": {
     "not_found_title": "404 - Page Not Found",
-    "not_found_desc": "Sorry, the beauty sanctuary you are looking for is unavailable or has been moved.",
+    "not_found_desc": "Sorry, the tool or page you are looking for is unavailable or has been moved.",
     "back_home": "Go back home",
     "generic_title": "Something went wrong",
     "generic_desc": "An unexpected error has occurred while loading this experience.",
