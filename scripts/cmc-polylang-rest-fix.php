@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CMC Belleza — Polylang REST API Fix
  * Description: Habilita filtrado por idioma en REST API para arquitectura headless con Polylang Free y Secure Custom Fields. Incluye campos programáticos, plantillas personalizadas, custom endpoints y dashboard de traducción.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: CMC Belleza Dev Team
  */
 
