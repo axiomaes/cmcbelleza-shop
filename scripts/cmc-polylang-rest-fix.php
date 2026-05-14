@@ -535,10 +535,11 @@ add_action( 'plugins_loaded', function() {
         }
     }, 999 );
 
-    // HOOK 4: register_rest_field (Translations)
+    // HOOK 4: register_rest_field (Translations & Lang con soporte de ESCRITURA)
     add_action( 'rest_api_init', function() {
         $post_types = array( 'post', 'page', 'product' );
         foreach ( $post_types as $type ) {
+            // A) Traducciones (GET & UPDATE)
             register_rest_field( $type, 'translations', array(
                 'get_callback' => function( $object ) {
                     $post_id = $object['id'];
@@ -548,12 +549,42 @@ add_action( 'plugins_loaded', function() {
                     }
                     return new stdClass(); 
                 },
-                'update_callback' => null,
+                'update_callback' => function( $value, $object, $field_name ) {
+                    if ( ! is_array( $value ) ) return;
+                    if ( function_exists( 'pll_save_post_translations' ) ) {
+                        $sanitized = array();
+                        foreach ( $value as $k => $v ) {
+                            $sanitized[sanitize_key($k)] = intval($v);
+                        }
+                        pll_save_post_translations( $sanitized );
+                    }
+                },
                 'schema'          => array(
                     'description' => 'Asociaciones de idioma de Polylang (es/en).',
                     'type'        => 'object',
                     'context'     => array( 'view', 'edit' ),
                 ),
+            ) );
+
+            // B) Lenguaje (GET & UPDATE)
+            register_rest_field( $type, 'lang', array(
+                'get_callback' => function( $object ) {
+                    if ( function_exists( 'pll_get_post_language' ) ) {
+                        return pll_get_post_language( $object['id'] );
+                    }
+                    return null;
+                },
+                'update_callback' => function( $value, $object, $field_name ) {
+                    if ( empty( $value ) ) return;
+                    if ( function_exists( 'pll_set_post_language' ) ) {
+                        pll_set_post_language( $object->ID, sanitize_text_field( $value ) );
+                    }
+                },
+                'schema' => array(
+                    'description' => 'Idioma del objeto Polylang.',
+                    'type'        => 'string',
+                    'context'     => array( 'view', 'edit' ),
+                )
             ) );
         }
     } );
