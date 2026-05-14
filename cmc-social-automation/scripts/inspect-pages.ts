@@ -1,24 +1,22 @@
+import fs from 'fs';
+import path from 'path';
 import { WordPressService } from '../src/services/wordpress.service.js';
 
 const wp = new WordPressService();
 
-import fs from 'fs';
-import path from 'path';
-
 async function inspect() {
   try {
-    console.log('--- INSPECCIÓN DE RUTAS REST API ---');
-    const response = await wp.client.get('/');
-    
-    const namespaces = response.data.namespaces || [];
-    console.log('Namespaces Disponibles:', namespaces);
-    
-    const routes = Object.keys(response.data.routes || {});
-    const pllRoutes = routes.filter(r => r.includes('pll') || r.includes('polylang') || r.includes('cmc'));
-    console.log('\nRutas Filtradas (pll/cmc):', pllRoutes);
+    const contact = await wp.client.get('/wp/v2/pages/2073');
+    console.log('--- VERIFICACIÓN CONTACTO EN (2073) ---');
+    console.log('Lang:', contact.data.lang);
+    console.log('Translations:', contact.data.translations);
 
+    const blog = await wp.client.get('/wp/v2/pages/2075');
+    console.log('\n--- VERIFICACIÓN BLOG EN (2075) ---');
+    console.log('Lang:', blog.data.lang);
+    console.log('Translations:', blog.data.translations);
   } catch (error: any) {
-    console.error('Error query root:', error.response?.data || error.message);
+    console.error('Error testing:', error.message);
   }
 }
 
