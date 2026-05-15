@@ -7,9 +7,15 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface ProductSliderProps {
   products: Product[];
+  dict?: {
+    featured?: string;
+    prev?: string;
+    next?: string;
+  };
+  hideTitle?: boolean;
 }
 
-const ProductSlider = ({ products }: ProductSliderProps) => {
+const ProductSlider = ({ products, dict, hideTitle = false }: ProductSliderProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -26,23 +32,27 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
   return (
     <div className="relative group">
       <div className="flex items-center justify-between mb-10">
-        <h2 className="text-3xl font-bold text-dark relative inline-block">
-          Destacados del momento
-          <span className="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-primary rounded-full"></span>
-        </h2>
+        {!hideTitle ? (
+          <h2 className="text-3xl font-bold text-dark relative inline-block">
+            {dict?.featured || "Destacados del momento"}
+            <span className="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-primary rounded-full"></span>
+          </h2>
+        ) : (
+          <div />
+        )}
 
         <div className="flex space-x-2">
           <button 
             onClick={() => scroll('left')}
             className="p-3 rounded-full bg-white border border-gray-100 text-dark hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm hover:shadow-md active:scale-95" 
-            aria-label="Anterior"
+            aria-label={dict?.prev || "Anterior"}
           >
             <ArrowLeft size={20} />
           </button>
           <button 
             onClick={() => scroll('right')}
             className="p-3 rounded-full bg-white border border-gray-100 text-dark hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm hover:shadow-md active:scale-95" 
-            aria-label="Siguiente"
+            aria-label={dict?.next || "Siguiente"}
           >
             <ArrowRight size={20} />
           </button>

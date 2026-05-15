@@ -4,6 +4,7 @@ import { fetchProducts } from '@/lib/woocommerce';
 import ProductSlider from '@/components/ui/ProductSlider';
 import { Product } from '@/types';
 import { getPageContent } from '@/lib/cms';
+import { getDictionary } from '@/lib/get-dictionary';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // 1 hour
@@ -14,6 +15,7 @@ interface HomeProps {
 
 export default async function Home({ params }: HomeProps) {
   const { locale } = await params;
+  const dict = await getDictionary(locale as any);
   
   let products: Product[] = [];
   let cmsData = null;
@@ -52,7 +54,10 @@ export default async function Home({ params }: HomeProps) {
     : "Wigs, bags, jewelry and beauty accessories curated for the modern woman");
   const heroImage = acf.hero_image || "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=90";
   const heroCtaText = acf.hero_cta_text || (isES ? "Ver Colección" : "Shop Now");
-  const heroCtaUrl = acf.hero_cta_url || `/${locale}/tienda`;
+  let heroCtaUrl = acf.hero_cta_url || `/${locale}/tienda`;
+  if (heroCtaUrl.endsWith('/shop') || heroCtaUrl === '/en/shop') {
+    heroCtaUrl = `/${locale}/tienda`;
+  }
 
   // Resolviendo Características Dinámicas
   const feature1 = {
@@ -194,7 +199,7 @@ export default async function Home({ params }: HomeProps) {
           
           <div className="w-full overflow-hidden">
             {products.length > 0 ? (
-              <ProductSlider products={products} />
+              <ProductSlider products={products} dict={dict.store} />
             ) : (
               <div className="text-center py-12 text-on-surface-variant/70 italic border border-dashed border-outline/30 rounded-2xl bg-surface-container-lowest">
                 {isES ? "No se encontraron productos en este momento." : "No products found at this time."}

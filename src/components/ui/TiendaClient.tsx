@@ -9,11 +9,24 @@ import Button from '@/components/ui/Button';
 interface TiendaClientProps {
   initialProducts: Product[];
   categories: Category[];
+  dict?: {
+    filters?: string;
+    search?: string;
+    searchPlaceholder?: string;
+    allCategories?: string;
+    maxPrice?: string;
+    clearFilters?: string;
+    noResults?: string;
+    noResultsDesc?: string;
+    viewFullCatalog?: string;
+  };
 }
 
-const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
+const TiendaClient = ({ initialProducts, categories, dict }: TiendaClientProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  
+  const isEnglish = dict?.filters === "Filters";
   
   const maxInitialPrice = useMemo(() => {
     return initialProducts.length > 0
@@ -47,12 +60,12 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
         <div className="bg-white/70 backdrop-blur-md p-6 rounded-[2rem] shadow-sm border border-white/60 sticky top-28">
           <h2 className="text-xl font-bold text-dark mb-6 flex items-center gap-2">
             <Settings2 className="h-6 w-6 text-primary" />
-            Filtros
+            {dict?.filters || "Filtros"}
           </h2>
 
           <div className="mb-6">
             <label htmlFor="search" className="block text-sm font-semibold text-dark-muted mb-2 font-sans">
-              Buscar producto
+              {dict?.search || "Buscar producto"}
             </label>
             <div className="relative">
               <input
@@ -60,7 +73,7 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
                 id="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Ej. Serum facial..."
+                placeholder={dict?.searchPlaceholder || "Ej. Serum facial..."}
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-100 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all bg-white/50 text-sm"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-dark-muted" />
@@ -69,7 +82,7 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
 
           <div className="mb-6">
             <label htmlFor="category" className="block text-sm font-semibold text-dark-muted mb-2 font-sans">
-              Categoría
+              {isEnglish ? "Category" : "Categoría"}
             </label>
             <select
               id="category"
@@ -77,7 +90,7 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all bg-white/50 text-sm appearance-none"
             >
-              <option value="all">Todas las categorías</option>
+              <option value="all">{dict?.allCategories || "Todas las categorías"}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -88,7 +101,7 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
 
           <div className="mb-8">
             <label htmlFor="price" className="flex justify-between text-sm font-semibold text-dark-muted mb-3 font-sans">
-              <span>Precio máximo</span>
+              <span>{dict?.maxPrice || "Precio máximo"}</span>
               <span className="text-secondary font-bold font-mono">${maxPrice}</span>
             </label>
             <input
@@ -111,7 +124,7 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
             className="w-full py-3 text-xs font-bold text-dark-muted hover:text-primary hover:bg-primary/5 rounded-xl transition-all flex items-center justify-center gap-2 border border-transparent hover:border-primary/10"
           >
             <X size={14} />
-            Limpiar filtros
+            {dict?.clearFilters || "Limpiar filtros"}
           </button>
         </div>
       </aside>
@@ -129,16 +142,16 @@ const TiendaClient = ({ initialProducts, categories }: TiendaClientProps) => {
             <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                <Search size={32} className="text-gray-300" />
             </div>
-            <p className="text-2xl font-bold text-dark mb-2">Sin resultados</p>
+            <p className="text-2xl font-bold text-dark mb-2">{dict?.noResults || "Sin resultados"}</p>
             <p className="text-dark-muted max-w-xs mx-auto">
-              No hemos encontrado productos que coincidan con tus filtros.
+              {dict?.noResultsDesc || "No hemos encontrado productos que coincidan con tus filtros."}
             </p>
             <Button 
               variant="outline" 
               onClick={handleReset}
               className="mt-6"
             >
-              Ver todo el catálogo
+              {dict?.viewFullCatalog || "Ver todo el catálogo"}
             </Button>
           </div>
         )}

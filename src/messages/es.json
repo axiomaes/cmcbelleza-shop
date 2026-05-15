@@ -58,6 +58,22 @@
     "empty": "No se encontraron productos.",
     "loading": "Cargando..."
   },
+  "store": {
+    "featured": "Destacados del momento",
+    "filters": "Filtros",
+    "search": "Buscar producto",
+    "searchPlaceholder": "Ej. Serum facial...",
+    "allCategories": "Todas las categorías",
+    "maxPrice": "Precio máximo",
+    "clearFilters": "Limpiar filtros",
+    "noResults": "Sin resultados",
+    "noResultsDesc": "No hemos encontrado productos que coincidan con tus filtros.",
+    "viewFullCatalog": "Ver todo el catálogo",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "emptyCart": "Tu carrito está vacío",
+    "emptyPage": "Esta página flexible no contiene bloques publicados aún."
+  },
   "metadata": {
     "title": "CMC Belleza — Moda, Pelucas, Bolsos y Accesorios para Mujer",
     "description": "Tienda online de moda y belleza femenina. Pelucas, bolsos, joyas y accesorios con envío a USA y todo el mundo.",

@@ -58,6 +58,22 @@
     "empty": "No products found.",
     "loading": "Loading..."
   },
+  "store": {
+    "featured": "Featured Right Now",
+    "filters": "Filters",
+    "search": "Search product",
+    "searchPlaceholder": "E.g. Face serum...",
+    "allCategories": "All Categories",
+    "maxPrice": "Max Price",
+    "clearFilters": "Clear Filters",
+    "noResults": "No results",
+    "noResultsDesc": "We could not find products that match your filters.",
+    "viewFullCatalog": "View Full Collection",
+    "prev": "Previous",
+    "next": "Next",
+    "emptyCart": "Your cart is empty",
+    "emptyPage": "This flexible page doesn't contain published blocks yet."
+  },
   "metadata": {
     "title": "CMC Belleza — Women's Fashion, Wigs, Bags & Beauty Accessories",
     "description": "Online fashion and beauty store for women. Wigs, bags, jewelry and accessories with fast US shipping worldwide.",

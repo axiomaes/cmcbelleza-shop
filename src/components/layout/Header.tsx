@@ -142,7 +142,7 @@ const Header = ({ locale = 'es' }: HeaderProps) => {
             )}
           </button>
 
-          <MiniCart />
+          <MiniCart locale={locale} />
 
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

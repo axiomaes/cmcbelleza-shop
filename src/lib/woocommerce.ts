@@ -141,6 +141,15 @@ export async function fetchCategories(lang?: string): Promise<Category[]> {
   return wooFetch<Category[]>(query);
 }
 
+export async function fetchCategoryBySlug(slug: string, lang?: string): Promise<Category | null> {
+  const query = lang ? `/products/categories?slug=${slug}&lang=${lang}` : `/products/categories?slug=${slug}`;
+  const categories = await wooFetch<Category[]>(query);
+  if (!categories || categories.length === 0) {
+    return null;
+  }
+  return categories[0];
+}
+
 export async function createOrder(data: OrderData): Promise<Order> {
   return wooFetch<Order>("/orders", {
     method: "POST",

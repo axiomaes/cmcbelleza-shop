@@ -29,7 +29,11 @@ export default function DynamicPage({ blocks = [], locale = 'es' }: DynamicPageP
     return (
       <div className="w-full py-32 text-center text-on-surface-variant italic font-sans border border-dashed border-surface-container max-w-md mx-auto my-12 rounded-xl">
         <span className="material-symbols-outlined text-[48px] mb-2 opacity-40">dashboard_customize</span>
-        <p className="text-sm">Esta página flexible no contiene bloques publicados aún.</p>
+        <p className="text-sm">
+          {locale === 'en' 
+            ? "This flexible page doesn't contain published blocks yet." 
+            : "Esta página flexible no contiene bloques publicados aún."}
+        </p>
       </div>
     );
   }

@@ -7,12 +7,32 @@ import { useCart } from '@/store/cartStore';
 import { X, ShoppingBag } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
-const MiniCart = () => {
+interface MiniCartProps {
+  locale?: string;
+  dict?: {
+    emptyCart?: string;
+    cartTitle?: string;
+    quantityPrefix?: string;
+    removeBtn?: string;
+    viewCartBtn?: string;
+  };
+}
+
+const MiniCart = ({ locale = 'es', dict }: MiniCartProps) => {
   const { items, isOpen, toggleCart, removeItem } = useCart();
 
   if (!isOpen) return null;
 
   const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  
+  const isEn = locale === 'en';
+  const t = {
+    title: dict?.cartTitle || (isEn ? 'Your Cart' : 'Tu Carrito'),
+    empty: dict?.emptyCart || (isEn ? 'Your cart is empty' : 'Tu carrito está vacío'),
+    qty: dict?.quantityPrefix || (isEn ? 'Qty' : 'Cant'),
+    remove: dict?.removeBtn || (isEn ? 'Remove' : 'Quitar'),
+    viewCart: dict?.viewCartBtn || (isEn ? 'View detailed cart' : 'Ver carrito detallado')
+  };
 
   return (
     <>
@@ -24,7 +44,7 @@ const MiniCart = () => {
       
       <div className="absolute top-full right-0 mt-4 w-80 sm:w-96 bg-white/95 backdrop-blur-xl border border-white/50 rounded-2xl shadow-2xl origin-top-right transition-all duration-300 overflow-hidden z-[70] animate-in zoom-in-95 fade-in duration-200">
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="text-lg font-bold text-dark">Tu Carrito</h3>
+          <h3 className="text-lg font-bold text-dark">{t.title}</h3>
           <button onClick={() => toggleCart(false)} className="text-dark-muted hover:text-primary transition-colors">
             <X className="h-5 w-5" />
           </button>
@@ -34,7 +54,7 @@ const MiniCart = () => {
           {items.length === 0 ? (
             <div className="text-center py-8">
               <ShoppingBag className="h-12 w-12 mx-auto text-gray-200 mb-2" />
-              <p className="text-dark-muted text-sm">Tu carrito está vacío</p>
+              <p className="text-dark-muted text-sm">{t.empty}</p>
             </div>
           ) : (
             items.map((item) => (
@@ -47,7 +67,7 @@ const MiniCart = () => {
                   )}
                 </div>
                 <div className="flex-1 pr-4">
-                  <p className="text-[10px] text-dark-muted">Cant: {item.quantity} x ${item.price.toFixed(2)}</p>
+                  <p className="text-[10px] text-dark-muted">{t.qty}: {item.quantity} x ${item.price.toFixed(2)}</p>
                 </div>
                 <div className="text-right flex flex-col items-end gap-1">
                   <span className="font-bold text-secondary text-xs">
@@ -57,7 +77,7 @@ const MiniCart = () => {
                     onClick={() => removeItem(item.productId)}
                     className="text-[10px] text-red-400 hover:text-red-500 underline"
                   >
-                    Quitar
+                    {t.remove}
                   </button>
                 </div>
               </div>
@@ -69,9 +89,9 @@ const MiniCart = () => {
           <div className="flex justify-between items-center mb-4">
             <span className="text-xl font-bold text-secondary">${total.toFixed(2)}</span>
           </div>
-          <Link href="/carrito" onClick={() => toggleCart(false)}>
+          <Link href={`/${locale}/carrito`} onClick={() => toggleCart(false)}>
             <Button variant="primary" fullWidth className="py-3 text-sm">
-              Ver carrito detallado
+              {t.viewCart}
             </Button>
           </Link>
         </div>
