@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CMC Belleza — Polylang REST API Fix
  * Description: Habilita filtrado por idioma en REST API para arquitectura headless con Polylang Free y Secure Custom Fields. Incluye campos programáticos, plantillas personalizadas, custom endpoints y dashboard de traducción.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: CMC Belleza Dev Team
  */
 
@@ -588,5 +588,56 @@ add_action( 'plugins_loaded', function() {
             ) );
         }
     } );
+
+    /**
+     * ==================================================================
+     * SECCIÓN 5: PIPELINE AUTOMÁTICO SPOCKET -> BILINGÜE
+     * ==================================================================
+     * Captura la creación de nuevos productos en WooCommerce, fija 'es' como 
+     * idioma base (si viene nulo de Spocket) y notifica al microservicio de sincronización.
+     */
+    add_action('woocommerce_new_product', 'cmc_auto_setup_product_languages', 10, 1);
+
+    function cmc_auto_setup_product_languages($product_id) {
+        // Evitar procesamiento recursivo o autosaves
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+        if ( ! function_exists( 'pll_set_post_language' ) ) return;
+
+        // Validar si el producto ya cuenta con un idioma asignado
+        $current_lang = pll_get_post_language( $product_id );
+        if ( ! empty( $current_lang ) ) {
+            return; // Skip si ya está configurado para evitar loops con el clonador EN
+        }
+
+        // 1. Fijar el idioma Español ('es') de forma nativa para productos de importación "vírgenes"
+        pll_set_post_language( $product_id, 'es' );
+
+        // 2. Notificar al microservicio Fastify de automatización social
+        // Intentar leer la URL desde una constante global (idealmente seteada en wp-config.php),
+        // de lo contrario usar el fallback dinámico basado en dominio axioma.
+        $api_endpoint = defined('CMC_SOCIAL_API_URL') 
+            ? CMC_SOCIAL_API_URL 
+            : 'https://social.cmcbelleza.shop'; // Dominio de fallback de producción
+
+        $webhook_url = rtrim($api_endpoint, '/') . '/api/products/setup-bilingual';
+
+        $payload = array(
+            'product_id' => intval($product_id)
+        );
+
+        // Petición asíncrona no-bloqueante para proteger los tiempos de respuesta de WooCommerce admin/cron
+        wp_remote_post( $webhook_url, array(
+            'method'      => 'POST',
+            'timeout'     => 15,
+            'redirection' => 5,
+            'httpversion' => '1.0',
+            'blocking'    => false, // Fuego y olvido
+            'headers'     => array(
+                'Content-Type' => 'application/json',
+            ),
+            'body'        => json_encode( $payload ),
+            'data_format' => 'body',
+        ) );
+    }
 
 });
