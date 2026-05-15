@@ -35,4 +35,34 @@ export class WordPressService {
       };
     }
   }
+
+  /**
+   * Remueve de forma limpia una categoría específica asignada a un producto vía WooCommerce API
+   */
+  async removeCategoryFromProduct(productId: number, categorySlug: string): Promise<boolean> {
+    try {
+      // 1. Descargar objeto completo actual para preservar las categorías existentes
+      const response = await this.client.get(`/wc/v3/products/${productId}`);
+      const currentCategories: Array<{ id: number; slug: string }> = response.data.categories || [];
+      
+      // 2. Filtrar y mapear solo a IDs ( WooCommerce PATCH espera array de objetos {id} )
+      const remainingCategories = currentCategories
+        .filter(cat => cat.slug !== categorySlug)
+        .map(cat => ({ id: cat.id }));
+      
+      if (remainingCategories.length === currentCategories.length) {
+        return false; // No tenía la categoría originalmente
+      }
+
+      // 3. Enviar PATCH de actualización parcial
+      await this.client.patch(`/wc/v3/products/${productId}`, {
+        categories: remainingCategories
+      });
+
+      return true;
+    } catch (error: any) {
+      console.error(`[WordPressService] Error retirando categoría ${categorySlug} del producto #${productId}:`, error.response?.data || error.message);
+      throw error;
+    }
+  }
 }

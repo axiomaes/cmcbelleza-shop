@@ -10,6 +10,7 @@ export interface WCProductPayload {
   featured: boolean;
   images: Array<{ src: string; id?: number; alt?: string }>;
   description?: string;
+  categories?: Array<{ id: number; name: string; slug: string }>;
 }
 
 export function validateWebhookSecret(request: FastifyRequest): boolean {
@@ -27,9 +28,12 @@ export function isValidProductForCampaign(product: any): { valid: boolean; reaso
     return { valid: false, reason: 'El payload no es un objeto válido' };
   }
 
-  // 1. ¿Es destacado?
-  if (product.featured !== true) {
-    return { valid: false, reason: 'El producto no está marcado como destacado (featured)' };
+  // 1. ¿Posee la categoría especial para disparo social?
+  const hasSocialCategory = Array.isArray(product.categories) && 
+    product.categories.some((cat: any) => cat.slug === env.SOCIAL_PUBLISH_CATEGORY_SLUG);
+
+  if (!hasSocialCategory) {
+    return { valid: false, reason: `El producto no tiene la categoría de disparo social '${env.SOCIAL_PUBLISH_CATEGORY_SLUG}'` };
   }
 
   // 2. ¿Tiene ID y Nombre?
