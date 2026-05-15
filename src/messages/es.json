@@ -115,7 +115,15 @@
     "prev": "Anterior",
     "next": "Siguiente",
     "emptyCart": "Tu carrito está vacío",
-    "emptyPage": "Esta página flexible no contiene bloques publicados aún."
+    "emptyPage": "Esta página flexible no contiene bloques publicados aún.",
+    "add_to_cart": "Añadir al carrito",
+    "authentic_product": "Producto 100% Original",
+    "out_of_stock_btn": "Agotado",
+    "quantity": "Cantidad",
+    "share": "Compartir",
+    "details": "Descripción detallada",
+    "shipping": "Envíos y devoluciones",
+    "back_to_shop": "Volver a la tienda"
   },
   "metadata": {
     "title": "CMC Belleza — Moda, Pelucas, Bolsos y Accesorios para Mujer",

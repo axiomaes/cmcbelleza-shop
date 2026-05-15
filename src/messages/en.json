@@ -115,7 +115,15 @@
     "prev": "Previous",
     "next": "Next",
     "emptyCart": "Your cart is empty",
-    "emptyPage": "This flexible page doesn't contain published blocks yet."
+    "emptyPage": "This flexible page doesn't contain published blocks yet.",
+    "add_to_cart": "Add to Cart",
+    "authentic_product": "100% Authentic Product",
+    "out_of_stock_btn": "Out of Stock",
+    "quantity": "Quantity",
+    "share": "Share",
+    "details": "Product Details",
+    "shipping": "Shipping & Returns",
+    "back_to_shop": "Back to Shop"
   },
   "metadata": {
     "title": "CMC Belleza — Women's Fashion, Wigs, Bags & Beauty Accessories",

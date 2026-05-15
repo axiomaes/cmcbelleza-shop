@@ -46,6 +46,16 @@ function formatPrice(price: string): string {
   }).format(num);
 }
 
+function decodeHtml(html: string): string {
+  if (!html) return '';
+  return html
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'");
+}
+
 const ProductCard = ({ product, priority = false, locale = 'en', dict }: ProductCardProps) => {
   const { addItem, toggleCart } = useCart();
 
@@ -143,7 +153,7 @@ const ProductCard = ({ product, priority = false, locale = 'en', dict }: Product
         {/* Categoría Principal */}
         {product.categories?.[0] && (
           <span className="text-[10px] font-bold text-champagne-gold tracking-[0.15em] uppercase mb-1.5">
-            {product.categories[0].name}
+            {decodeHtml(product.categories[0].name)}
           </span>
         )}
 

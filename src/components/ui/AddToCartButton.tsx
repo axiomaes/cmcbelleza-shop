@@ -3,14 +3,17 @@
 import React, { useState } from 'react';
 import { useCart } from '@/store/cartStore';
 import { Product } from '@/types';
-import Button from '@/components/ui/Button';
-import { ShoppingCart, Check } from 'lucide-react';
+import { ShoppingBag, Check } from 'lucide-react';
 
 interface AddToCartButtonProps {
   product: Product;
+  dict?: {
+    add_to_cart?: string;
+    out_of_stock_btn?: string;
+  };
 }
 
-const AddToCartButton = ({ product }: AddToCartButtonProps) => {
+const AddToCartButton = ({ product, dict }: AddToCartButtonProps) => {
   const { addItem, toggleCart } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -32,28 +35,31 @@ const AddToCartButton = ({ product }: AddToCartButtonProps) => {
 
   const isOutOfStock = product.stock_status === 'outofstock';
 
+  // Fallbacks en caso de que el dict sea undefined
+  const labelAddToCart = dict?.add_to_cart || 'Add to Cart';
+  const labelOutOfStock = dict?.out_of_stock_btn || 'Out of Stock';
+  const labelAdded = 'Added!';
+
   return (
-    <Button
-      variant={added ? 'secondary' : 'dark'}
-      fullWidth
+    <button
       onClick={handleAdd}
       disabled={isOutOfStock || added}
-      className="gap-2"
+      className="w-full bg-soft-charcoal text-white py-4.5 rounded-xl font-bold text-[11px] uppercase tracking-widest hover:bg-champagne-gold disabled:bg-stroke-grey disabled:text-outline transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md shadow-soft-charcoal/10 hover:shadow-xl"
     >
       {isOutOfStock ? (
-        'Agotado'
+        labelOutOfStock
       ) : added ? (
         <>
-          <Check size={20} />
-          ¡Añadido!
+          <Check size={18} />
+          {labelAdded}
         </>
       ) : (
         <>
-          <ShoppingCart size={20} />
-          Añadir al carrito
+          <ShoppingBag size={18} />
+          {labelAddToCart}
         </>
       )}
-    </Button>
+    </button>
   );
 };
 
