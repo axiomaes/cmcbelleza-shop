@@ -18,6 +18,14 @@ pool.on('error', (err) => {
 });
 
 export async function query(text: string, params?: any[]) {
+  // Si la URL es dummy, simular una base de datos vacía para desarrollo local sin errores de conexión
+  if (env.DATABASE_URL.includes('dummy')) {
+    if (env.NODE_ENV === 'development') {
+      console.warn('[DB Mock] Simulación de consulta local activa (DATABASE_URL es dummy):', text.substring(0, 80).replace(/\n/g, ' ') + '...');
+    }
+    return { rows: [], rowCount: 0 } as any;
+  }
+
   const start = Date.now();
   const res = await pool.query(text, params);
   const duration = Date.now() - start;

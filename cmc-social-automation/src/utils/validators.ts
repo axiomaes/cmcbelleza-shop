@@ -9,6 +9,7 @@ export interface WCProductPayload {
   permalink: string;
   featured: boolean;
   images: Array<{ src: string; id?: number; alt?: string }>;
+  description?: string;
 }
 
 export function validateWebhookSecret(request: FastifyRequest): boolean {
