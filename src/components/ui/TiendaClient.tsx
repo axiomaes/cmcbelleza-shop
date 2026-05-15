@@ -9,6 +9,7 @@ import Button from '@/components/ui/Button';
 interface TiendaClientProps {
   initialProducts: Product[];
   categories: Category[];
+  locale?: string;
   dict?: {
     filters?: string;
     search?: string;
@@ -19,14 +20,18 @@ interface TiendaClientProps {
     noResults?: string;
     noResultsDesc?: string;
     viewFullCatalog?: string;
+    shop?: {
+      add_to_cart?: string;
+      out_of_stock?: string;
+    };
   };
 }
 
-const TiendaClient = ({ initialProducts, categories, dict }: TiendaClientProps) => {
+const TiendaClient = ({ initialProducts, categories, locale = 'en', dict }: TiendaClientProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   
-  const isEnglish = dict?.filters === "Filters";
+  const isEnglish = locale === 'en';
   
   const maxInitialPrice = useMemo(() => {
     return initialProducts.length > 0
@@ -134,7 +139,12 @@ const TiendaClient = ({ initialProducts, categories, dict }: TiendaClientProps) 
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                locale={locale}
+                dict={dict?.shop}
+              />
             ))}
           </div>
         ) : (

@@ -7,15 +7,20 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface ProductSliderProps {
   products: Product[];
+  locale?: string;
   dict?: {
     featured?: string;
     prev?: string;
     next?: string;
+    shop?: {
+      add_to_cart?: string;
+      out_of_stock?: string;
+    };
   };
   hideTitle?: boolean;
 }
 
-const ProductSlider = ({ products, dict, hideTitle = false }: ProductSliderProps) => {
+const ProductSlider = ({ products, locale = 'en', dict, hideTitle = false }: ProductSliderProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -66,7 +71,11 @@ const ProductSlider = ({ products, dict, hideTitle = false }: ProductSliderProps
       >
         {products.map((product) => (
           <div key={product.id} className="snap-start shrink-0 w-[85%] sm:w-[45%] md:w-[30%] lg:w-[23%]">
-            <ProductCard product={product} />
+            <ProductCard 
+              product={product} 
+              locale={locale}
+              dict={dict?.shop}
+            />
           </div>
         ))}
         

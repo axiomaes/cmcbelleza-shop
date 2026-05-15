@@ -1,12 +1,33 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { getDictionary } from '@/lib/get-dictionary';
 
-export const metadata: Metadata = {
-  title: 'Contacto',
-  description: 'Hablemos de tu piel. Envíanos tus dudas y consultas.',
-};
+interface ContactPageProps {
+  params: Promise<{ locale: string }>;
+}
 
-export default function ContactPage() {
+export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const dict = await getDictionary(locale as any);
+  
+  return {
+    title: dict.footer.contact, // Usamos Contact / Contacto del diccionario general
+    description: dict.contact.hero_title,
+  };
+}
+
+export default async function ContactPage({ params }: ContactPageProps) {
+  const { locale } = await params;
+  const dict = await getDictionary(locale as any);
+  
+  const t = dict.contact;
+
+  // Mapear slug localizado de política de privacidad
+  const privacySlug = locale === 'en' ? 'privacy-policy' : 'politica-privacidad';
+
+  // Dividir la cadena de consentimiento para renderizar el enlace HTML
+  const consentParts = t.labels.consent.split('{privacy_policy}');
+
   return (
     <main className="relative min-h-screen bg-background pt-20 pb-section-gap font-sans">
       {/* Background Botanical Decorative Accents (abstract) */}
@@ -17,10 +38,14 @@ export default function ContactPage() {
 
       <div className="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div className="mb-12 max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <span className="text-secondary font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Atención Personalizada</span>
-          <h1 className="font-serif text-5xl md:text-6xl text-primary mb-6 leading-tight">Hablemos de tu piel.</h1>
+          <span className="text-secondary font-bold text-xs uppercase tracking-[0.2em] mb-4 block">
+            {t.hero_badge}
+          </span>
+          <h1 className="font-serif text-5xl md:text-6xl text-primary mb-6 leading-tight">
+            {t.hero_title}
+          </h1>
           <p className="text-on-surface-variant text-lg leading-relaxed">
-            ¿Tienes preguntas sobre una rutina, ingredientes o un pedido? Nuestro equipo de especialistas está listo para guiarte hacia el bienestar de tu piel.
+            {t.hero_desc}
           </p>
         </div>
 
@@ -32,9 +57,15 @@ export default function ContactPage() {
                 <span className="material-symbols-outlined text-[24px]">mail</span>
               </div>
               <div>
-                <h3 className="font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">Escríbenos</h3>
-                <p className="font-serif text-xl text-primary font-medium">hola@cmcbelleza.shop</p>
-                <p className="text-sm text-on-surface-variant/70 mt-1">Consultas generales y soporte posventa.</p>
+                <h3 className="font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">
+                  {t.cards.support_badge}
+                </h3>
+                <p className="font-serif text-xl text-primary font-medium">
+                  {t.cards.support_title}
+                </p>
+                <p className="text-sm text-on-surface-variant/70 mt-1">
+                  {t.cards.support_desc}
+                </p>
               </div>
             </div>
 
@@ -43,9 +74,15 @@ export default function ContactPage() {
                 <span className="material-symbols-outlined text-[24px]">forum</span>
               </div>
               <div>
-                <h3 className="font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">Comunidad</h3>
-                <p className="font-serif text-xl text-primary font-medium">@cmcbelleza</p>
-                <p className="text-sm text-on-surface-variant/70 mt-1">Únete y comparte en nuestras redes.</p>
+                <h3 className="font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">
+                  {t.cards.community_badge}
+                </h3>
+                <p className="font-serif text-xl text-primary font-medium">
+                  {t.cards.community_title}
+                </p>
+                <p className="text-sm text-on-surface-variant/70 mt-1">
+                  {t.cards.community_desc}
+                </p>
               </div>
             </div>
 
@@ -54,9 +91,11 @@ export default function ContactPage() {
                 <span className="material-symbols-outlined text-[24px]">verified</span>
               </div>
               <div>
-                <h3 className="font-bold text-sm text-on-surface mb-1">Asesoría Certificada</h3>
+                <h3 className="font-bold text-sm text-on-surface mb-1">
+                  {t.form_title}
+                </h3>
                 <p className="text-sm text-on-surface-variant">
-                  Respondemos cada mensaje en un plazo máximo de 24 horas hábiles.
+                  {t.form_subtitle}
                 </p>
               </div>
             </div>
@@ -67,47 +106,55 @@ export default function ContactPage() {
             <form className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
-                  <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">Nombre Completo</label>
+                  <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">
+                    {t.labels.name}
+                  </label>
                   <input
                     type="text"
                     id="name"
                     className="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
-                    placeholder="Ej. María García"
+                    placeholder={t.placeholders.name}
                     required
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">Email</label>
+                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">
+                    {t.labels.email}
+                  </label>
                   <input
                     type="email"
                     id="email"
                     className="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
-                    placeholder="tu@correo.com"
+                    placeholder={t.placeholders.email}
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="type" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">Motivo de Consulta</label>
+                <label htmlFor="type" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">
+                  {t.labels.subject}
+                </label>
                 <select
                   id="type"
                   className="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm text-on-surface"
                 >
-                  <option>Asesoría sobre productos</option>
-                  <option>Consulta sobre pedido</option>
-                  <option>Recomendación de rutina</option>
-                  <option>Otro</option>
+                  <option value="product">{t.options.product_advice}</option>
+                  <option value="order">{t.options.order_query}</option>
+                  <option value="routine">{t.options.style_recommendation}</option>
+                  <option value="other">{t.options.other}</option>
                 </select>
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">Mensaje / Necesidades</label>
+                <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant block">
+                  {t.labels.message}
+                </label>
                 <textarea
                   id="message"
                   rows={5}
                   className="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm resize-none"
-                  placeholder="Cuéntanos sobre tu tipo de piel o tu consulta específica..."
+                  placeholder={t.placeholders.message}
                   required
                 ></textarea>
               </div>
@@ -115,7 +162,11 @@ export default function ContactPage() {
               <div className="flex items-start gap-3 pt-2">
                 <input type="checkbox" id="terms" className="mt-1 border-outline-variant text-primary focus:ring-primary rounded" required />
                 <label htmlFor="terms" className="text-xs text-on-surface-variant font-medium leading-relaxed">
-                  He leído y acepto la <a href="/info/politica-privacidad" className="text-primary underline font-bold">política de privacidad</a>. Autorizo el tratamiento de mis datos para la resolución de la consulta.
+                  {consentParts[0]}
+                  <a href={`/${locale}/${privacySlug}`} className="text-primary underline font-bold">
+                    {locale === 'en' ? 'privacy policy' : 'política de privacidad'}
+                  </a>
+                  {consentParts[1]}
                 </label>
               </div>
 
@@ -123,7 +174,7 @@ export default function ContactPage() {
                 type="submit"
                 className="w-full sm:w-auto bg-primary text-white px-10 py-4 rounded-lg font-bold text-sm uppercase tracking-widest shadow-lg shadow-primary/10 hover:bg-primary-container hover:-translate-y-0.5 transition-all duration-300 mt-4"
               >
-                Enviar Mensaje
+                {t.labels.submit}
               </button>
             </form>
           </div>

@@ -56,7 +56,11 @@ export default async function TiendaPage({ params }: TiendaPageProps) {
         <TiendaClient 
           initialProducts={products} 
           categories={categories} 
-          dict={dict.store}
+          locale={locale}
+          dict={{
+            ...dict.store,
+            shop: dict.shop
+          }}
         />
       </main>
     </div>

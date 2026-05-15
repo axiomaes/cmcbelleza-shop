@@ -3,10 +3,11 @@ import { ProductsGridBlockData } from '@/lib/cms';
 import { fetchProducts } from '@/lib/woocommerce';
 import ProductCard from '@/components/ui/ProductCard';
 import { Product } from '@/types';
+import { getDictionary } from '@/lib/get-dictionary';
 
 export default async function ProductsGridBlock({ 
   data, 
-  locale = 'es' 
+  locale = 'en' 
 }: { 
   data: ProductsGridBlockData; 
   locale?: string;
@@ -14,6 +15,7 @@ export default async function ProductsGridBlock({
   // Elementos vacíos preventivos
   if (!data.title) return null;
 
+  const dict = await getDictionary(locale as any);
   let products: Product[] = [];
   
   try {
@@ -30,6 +32,8 @@ export default async function ProductsGridBlock({
   // No renderizar la sección completa si falló la API y no hay productos
   if (products.length === 0) return null;
 
+  const labelBadge = locale === 'es' ? 'Colección Curada' : 'Curated Collection';
+
   return (
     <section className="w-full py-16 md:py-24 bg-surface-container-low overflow-hidden font-sans">
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
@@ -38,7 +42,7 @@ export default async function ProductsGridBlock({
         <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
           <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-secondary rounded-full"></span>
-            Colección Curada
+            {labelBadge}
           </span>
           
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-primary leading-tight font-medium mb-4 line-clamp-2">
@@ -57,7 +61,11 @@ export default async function ProductsGridBlock({
           {products.map((product) => (
             <div key={product.id} className="h-full flex">
               {/* Tarjeta de Producto nativa del diseño original */}
-              <ProductCard product={product} />
+              <ProductCard 
+                product={product} 
+                locale={locale}
+                dict={dict.shop}
+              />
             </div>
           ))}
         </div>

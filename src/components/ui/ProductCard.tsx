@@ -9,6 +9,13 @@ import { useCart } from '@/store/cartStore';
 interface ProductCardProps {
   product: Product;
   priority?: boolean;
+  locale?: string;
+  dict?: {
+    add_to_cart?: string;
+    out_of_stock?: string;
+    sale?: string;
+    featured?: string;
+  };
 }
 
 function formatPrice(price: string): string {
@@ -20,7 +27,7 @@ function formatPrice(price: string): string {
   }).format(num);
 }
 
-const ProductCard = ({ product, priority = false }: ProductCardProps) => {
+const ProductCard = ({ product, priority = false, locale = 'en', dict }: ProductCardProps) => {
   const { addItem, toggleCart } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -41,20 +48,27 @@ const ProductCard = ({ product, priority = false }: ProductCardProps) => {
 
   const hasDiscount = product.sale_price && product.sale_price !== product.regular_price;
 
+  // Traducciones fallback basadas en idioma
+  const isEs = locale === 'es';
+  const labelSale = dict?.sale || (isEs ? 'OFERTA' : 'SALE');
+  const labelFeatured = dict?.featured || (isEs ? 'DESTACADO' : 'FEATURED');
+  const labelOutOfStock = dict?.out_of_stock || (isEs ? 'SIN STOCK' : 'OUT OF STOCK');
+  const labelAddToCart = dict?.add_to_cart || (isEs ? 'Añadir' : 'Add to Cart');
+
   return (
     <article className="group bg-white p-3 rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 border border-outline-variant/20 flex flex-col h-full relative font-sans">
-      <Link href={`/producto/${product.slug}`} className="absolute inset-0 z-10" aria-label={`Ver detalles de ${product.name}`} />
+      <Link href={`/${locale}/producto/${product.slug}`} className="absolute inset-0 z-10" aria-label={`Ver detalles de ${product.name}`} />
 
       {/* Badges */}
       <div className="absolute top-5 left-5 z-20 flex flex-col gap-2 pointer-events-none">
         {hasDiscount && (
           <div className="bg-secondary text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-widest shadow-md">
-            OFERTA
+            {labelSale}
           </div>
         )}
         {product.featured && (
           <div className="bg-primary text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-widest shadow-md">
-            DESTACADO
+            {labelFeatured}
           </div>
         )}
       </div>
@@ -62,7 +76,7 @@ const ProductCard = ({ product, priority = false }: ProductCardProps) => {
       {/* Stock status */}
       {product.stock_status === 'outofstock' && (
         <div className="absolute top-5 right-5 z-20 bg-surface-container-highest/80 text-on-surface text-[10px] font-bold px-2.5 py-1 rounded backdrop-blur-md pointer-events-none">
-          SIN STOCK
+          {labelOutOfStock}
         </div>
       )}
 
@@ -113,10 +127,10 @@ const ProductCard = ({ product, priority = false }: ProductCardProps) => {
             disabled={product.stock_status === 'outofstock'}
             className="relative z-20 w-full bg-white text-primary border border-primary py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-all duration-300 pointer-events-auto flex items-center justify-center gap-2 disabled:border-outline-variant disabled:text-outline-variant disabled:hover:bg-transparent"
           >
-            {product.stock_status === 'outofstock' ? 'Agotado' : (
+            {product.stock_status === 'outofstock' ? labelOutOfStock : (
               <>
                 <span className="material-symbols-outlined text-[18px]">shopping_cart</span>
-                Añadir
+                {labelAddToCart}
               </>
             )}
           </button>

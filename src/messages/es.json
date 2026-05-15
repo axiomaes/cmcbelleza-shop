@@ -54,9 +54,52 @@
   },
   "shop": {
     "add_to_cart": "Añadir al carrito",
+    "out_of_stock": "Agotado",
     "related": "Productos Relacionados",
     "empty": "No se encontraron productos.",
     "loading": "Cargando..."
+  },
+  "blog": {
+    "tag": "Rituales de Bienestar",
+    "title": "Diario de Belleza",
+    "description": "Explora nuestros artículos sobre moda, accesorios y tips de belleza",
+    "coming_soon_title": "Próximos Capítulos",
+    "coming_soon_desc": "Estamos preparando guías botánicas exclusivas para ti.",
+    "read_article": "Leer el Artículo"
+  },
+  "contact": {
+    "hero_badge": "ATENCIÓN PERSONALIZADA",
+    "hero_title": "Hablemos de tu piel",
+    "hero_desc": "¿Tienes preguntas sobre una rutina, ingredientes o un pedido? Nuestro equipo de especialistas está listo para guiarte hacia el bienestar de tu piel.",
+    "cards": {
+      "support_badge": "ESCRÍBENOS",
+      "support_title": "hola@cmcbelleza.shop",
+      "support_desc": "Consultas generales y soporte posventa.",
+      "community_badge": "COMUNIDAD",
+      "community_title": "@cmcbelleza",
+      "community_desc": "Únete y comparte en nuestras redes."
+    },
+    "form_title": "Asesoría Certificada",
+    "form_subtitle": "Respondemos cada mensaje en un plazo máximo de 24 horas hábiles.",
+    "labels": {
+      "name": "Nombre Completo",
+      "email": "Email",
+      "subject": "Motivo de Consulta",
+      "message": "Mensaje / Necesidades",
+      "submit": "Enviar Mensaje",
+      "consent": "He leído y acepto la {privacy_policy}. Autorizo el tratamiento de mis datos para la resolución de la consulta."
+    },
+    "placeholders": {
+      "name": "Ej. María García",
+      "email": "tu@correo.com",
+      "message": "Cuéntanos sobre tu tipo de piel o tu consulta específica..."
+    },
+    "options": {
+      "product_advice": "Asesoría sobre productos",
+      "order_query": "Consulta sobre pedido",
+      "style_recommendation": "Recomendación de rutina",
+      "other": "Otro"
+    }
   },
   "store": {
     "featured": "Destacados del momento",

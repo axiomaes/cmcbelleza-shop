@@ -53,10 +53,53 @@
     ]
   },
   "shop": {
-    "add_to_cart": "Add to cart",
+    "add_to_cart": "Add to Cart",
+    "out_of_stock": "Out of Stock",
     "related": "Related Products",
     "empty": "No products found.",
     "loading": "Loading..."
+  },
+  "blog": {
+    "tag": "Beauty Rituals",
+    "title": "Beauty Journal",
+    "description": "Explore our articles on fashion, accessories and beauty tips",
+    "coming_soon_title": "Coming Soon",
+    "coming_soon_desc": "We are preparing exclusive beauty guides for you.",
+    "read_article": "Read Article"
+  },
+  "contact": {
+    "hero_badge": "PERSONALIZED SUPPORT",
+    "hero_title": "Let's Talk Beauty",
+    "hero_desc": "Do you have questions about products, shipping or an order? Our team is ready to help you express your unique style.",
+    "cards": {
+      "support_badge": "EMAIL US",
+      "support_title": "hola@cmcbelleza.shop",
+      "support_desc": "General inquiries and after-sales support",
+      "community_badge": "COMMUNITY",
+      "community_title": "@cmcbelleza",
+      "community_desc": "Join and share on our social media"
+    },
+    "form_title": "Certified Support",
+    "form_subtitle": "We respond to every message within 24 business hours",
+    "labels": {
+      "name": "Full Name",
+      "email": "Email",
+      "subject": "Reason for Inquiry",
+      "message": "Message / Needs",
+      "submit": "Send Message",
+      "consent": "I have read and accept the {privacy_policy}. I authorize the processing of my data to resolve my query."
+    },
+    "placeholders": {
+      "name": "E.g. Jane Doe",
+      "email": "jane@example.com",
+      "message": "Tell us about your specific query or needs..."
+    },
+    "options": {
+      "product_advice": "Product Advice",
+      "order_query": "Order Status Inquiry",
+      "style_recommendation": "Style Recommendation",
+      "other": "Other"
+    }
   },
   "store": {
     "featured": "Featured Right Now",
