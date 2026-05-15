@@ -117,10 +117,11 @@ const Header = ({ locale = 'es' }: HeaderProps) => {
         </nav>
 
         <div className="flex items-center space-x-3 relative z-10">
-          {/* Language Switcher Toggle */}
+          {/* Reactivar para bilingüismo ES/EN
           <div className="hidden sm:block mr-1">
             <LanguageSwitcher />
           </div>
+          */}
 
           <button 
             className="text-primary hover:text-secondary transition-all p-2" 
@@ -156,9 +157,11 @@ const Header = ({ locale = 'es' }: HeaderProps) => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-white border-b border-outline-variant/30 shadow-xl lg:hidden overflow-hidden transition-all duration-300 origin-top animate-in fade-in slide-in-from-top-4 flex flex-col">
+            {/* Reactivar para bilingüismo ES/EN
             <div className="px-6 py-3 border-b border-surface-container-high flex justify-start">
               <LanguageSwitcher />
             </div>
+            */}
             <Link href={`/${locale}`} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-on-surface font-sans font-medium tracking-wider border-b border-surface-container-high hover:bg-surface-container-low">{t.home.toUpperCase()}</Link>
             <Link href={`/${locale}/tienda`} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-on-surface font-sans font-medium tracking-wider border-b border-surface-container-high hover:bg-surface-container-low">{t.shop.toUpperCase()}</Link>
             <Link href={`/${locale}/blog`} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-on-surface font-sans font-medium tracking-wider border-b border-surface-container-high hover:bg-surface-container-low">{t.blog.toUpperCase()}</Link>

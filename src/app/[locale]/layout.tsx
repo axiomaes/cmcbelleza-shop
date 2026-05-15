@@ -41,11 +41,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: 'website',
     },
     alternates: {
-      canonical: `https://cmcbelleza.shop/${activeLocale}`,
+      canonical: `https://cmcbelleza.shop/en`,
       languages: {
-        'es': 'https://cmcbelleza.shop/es',
+        // Reactivar para bilingüismo ES/EN
+        // 'es': 'https://cmcbelleza.shop/es',
         'en': 'https://cmcbelleza.shop/en',
-        'x-default': 'https://cmcbelleza.shop/es'
+        'x-default': 'https://cmcbelleza.shop/en'
       }
     },
     icons: {

@@ -34,19 +34,25 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Comprobar si la ruta actual ya tiene un locale soportado al inicio
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  // ⚡ Cambio temporal: Simplificar a EN único. Redirigir ES y default a EN.
+  // Reactivar para bilingüismo ES/EN restaurando detección dinámica de getLocale
 
-  if (pathnameHasLocale) {
+  // 1. Si la ruta es /es o empieza con /es/, redirigir obligatoriamente a /en
+  if (pathname === '/es' || pathname.startsWith('/es/')) {
+    const newPathname = pathname === '/es' ? '/en' : pathname.replace(/^\/es\//, '/en/');
+    request.nextUrl.pathname = newPathname;
+    return NextResponse.redirect(request.nextUrl);
+  }
+
+  // 2. Comprobar si la ruta tiene /en/ al inicio o es exactamente /en
+  const pathnameHasEn = pathname === '/en' || pathname.startsWith('/en/');
+
+  if (pathnameHasEn) {
     return NextResponse.next();
   }
 
-  // Si no tiene locale, redirigir al locale preferido (es / en)
-  const locale = getLocale(request);
-  request.nextUrl.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
-  
+  // 3. Default -> Redirigir a /en (cualquier ruta sin locale)
+  request.nextUrl.pathname = `/en${pathname === '/' ? '' : pathname}`;
   return NextResponse.redirect(request.nextUrl);
 }
 

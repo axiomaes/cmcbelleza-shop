@@ -4,7 +4,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const BASE_URL = 'https://cmcbelleza.shop';
 
   // Rutas fijas del sitio
-  const locales = ['es', 'en'];
+  // Rutas fijas del sitio (Reactivar locales = ['es', 'en'] para bilingüismo)
+  const locales = ['en'];
   const routes = [
     { path: '', priority: 1.0, changeFrequency: 'daily' as const },
     { path: '/tienda', priority: 0.9, changeFrequency: 'weekly' as const },
@@ -43,12 +44,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // 2. Generar las URLs legales traducidas
   const legalEntries = [
+    // Reactivar para bilingüismo ES/EN
+    /*
     ...legalPages.es.map((slug) => ({
       url: `${BASE_URL}/es/${slug}`,
       lastModified: currentYearMonth,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
+    */
     ...legalPages.en.map((slug) => ({
       url: `${BASE_URL}/en/${slug}`,
       lastModified: currentYearMonth,
