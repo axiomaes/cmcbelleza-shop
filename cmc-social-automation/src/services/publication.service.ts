@@ -53,74 +53,66 @@ export class PublicationService {
       };
     }
 
-    const imageUrl = product.images[0].src;
+    const imageUrl = (product.images && product.images.length > 0) ? product.images[0].src : '';
 
-    // 3. Ejecutar Publicaciones Paralelas con Aislamiento de Fallos (Promise.allSettled)
+    // 3. Ejecutar Publicaciones Paralelas con Aislamiento de Fallos y Etiquetado de Plataforma
     console.log(`[PublicationService] Iniciando ejecución paralela para ${activeTasks.length} plataformas...`);
 
-    const executionPromises = activeTasks.map(({ pub, caption }) => 
-      pub.publish({
-        productId: product.id,
-        productName: product.name,
-        caption: caption,
-        imageUrl: imageUrl,
-        permalink: product.permalink
-      })
-    );
-
-    const results = await Promise.allSettled(executionPromises);
-
-    // 4. Recopilar, registrar en base de datos y loguear resultados
-    const processedSummary: any[] = [];
-
-    for (let i = 0; i < results.length; i++) {
-      const { pub } = activeTasks[i];
-      const status = results[i];
-
-      if (status.status === 'fulfilled') {
-        const res = status.value;
-        
-        // Guardar en Historial (relacional por filas en registro_social_media)
-        await recordPublication({
+    // Mapeamos cada tarea a una promesa auto-contenida que retorna siempre su propio 'platform' y estado
+    const executionPromises = activeTasks.map(async ({ pub, caption }) => {
+      try {
+        const res = await pub.publish({
           productId: product.id,
           productName: product.name,
-          platform: pub.platform,
-          status: res.success ? 'published' : 'failed',
-          externalPostId: res.externalPostId,
-          errorMessage: res.error
+          caption: caption,
+          imageUrl: imageUrl,
+          permalink: product.permalink
         });
-
-        processedSummary.push({
+        
+        return {
           platform: pub.platform,
           success: res.success,
-          postId: res.externalPostId,
+          externalPostId: res.externalPostId,
           error: res.error
-        });
-
-        if (res.success) {
-          console.log(`[PublicationService] ${pub.platform.toUpperCase()}: Publicado con éxito ✅ (ID: ${res.externalPostId})`);
-        } else {
-          console.error(`[PublicationService] ${pub.platform.toUpperCase()}: Error en plataforma ❌ -> ${res.error}`);
-        }
-
-      } else {
-        // Captura de errores no controlados o caídas catastróficas en la promesa
-        const errorMsg = status.reason?.message || String(status.reason);
-        console.error(`[PublicationService] ${pub.platform.toUpperCase()}: Fallo catastrófico en la tarea de red ❌`, errorMsg);
-        
-        await recordPublication({
-          productId: product.id,
-          productName: product.name,
-          platform: pub.platform,
-          status: 'failed',
-          errorMessage: `Excepción en ejecutor: ${errorMsg}`
-        });
-
-        processedSummary.push({
+        };
+      } catch (error: any) {
+        const errorMsg = error.message || String(error);
+        return {
           platform: pub.platform,
           success: false,
-          error: errorMsg
-        });
+          error: `Excepción en ejecutor: ${errorMsg}`
+        };
+      }
+    });
+
+    // Promise.all es 100% seguro aquí porque cada promesa en el array maneja internamente su try/catch
+    const results = await Promise.all(executionPromises);
+
+    // 4. Recopilar, registrar en base de datos e informar
+    const processedSummary: any[] = [];
+
+    for (const res of results) {
+      // Guardar en Historial de forma individual (relacional por filas en registro_social_media)
+      await recordPublication({
+        productId: product.id,
+        productName: product.name,
+        platform: res.platform,
+        status: res.success ? 'published' : 'failed',
+        externalPostId: res.externalPostId,
+        errorMessage: res.error
+      });
+
+      processedSummary.push({
+        platform: res.platform,
+        success: res.success,
+        postId: res.externalPostId,
+        error: res.error
+      });
+
+      if (res.success) {
+        console.log(`[PublicationService] ${res.platform.toUpperCase()}: Publicado con éxito ✅ (ID: ${res.externalPostId})`);
+      } else {
+        console.error(`[PublicationService] ${res.platform.toUpperCase()}: Error capturado ❌ -> ${res.error}`);
       }
     }
 
@@ -128,7 +120,7 @@ export class PublicationService {
     const overallSuccess = processedSummary.some(s => s.success === true);
 
     return {
-      success: true, // El proceso de orquestación se completó
+      success: true, // El proceso de orquestación se completó sin bloquearse
       status: 'completed',
       hasAnySuccess: overallSuccess,
       platformsProcessed: processedSummary
