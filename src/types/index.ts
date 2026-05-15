@@ -29,6 +29,19 @@ export interface Product {
   stock_status: 'instock' | 'outofstock' | 'onbackorder';
   stock_quantity: number | null;
   featured: boolean;
+  date_created?: string;
+  average_rating?: string;
+  rating_count?: number;
+  attributes?: Array<{
+    id: number;
+    name: string;
+    options: string[];
+  }>;
+  tags?: Array<{
+    id: number;
+    name: string;
+    slug: string;
+  }>;
 }
 
 export interface CartItem {

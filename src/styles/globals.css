@@ -29,6 +29,12 @@
   --color-outline: #73796f;
   --color-outline-variant: #c3c8bd;
   
+  /* Premium Palette Addition (Stitch Reference) */
+  --color-champagne-gold: #c5a880;
+  --color-powder-pink: #f5e1e1;
+  --color-soft-charcoal: #2c2c2c;
+  --color-stroke-grey: #e5e5e5;
+  
   /* Legacy Variable Mapping to avoid immediate breakage */
   --color-dark: #1b1c1c;
   --color-dark-muted: #434840;
