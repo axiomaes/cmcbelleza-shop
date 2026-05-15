@@ -187,3 +187,14 @@ export async function fetchPageBySlug(slug: string, lang?: string): Promise<WPPa
   }
   return pages[0];
 }
+
+// Reviews del producto via WooCommerce REST API
+export async function fetchProductReviews(productId: number): Promise<any[]> {
+  try {
+    const reviews = await wooFetch<any[]>(`/products/reviews?product=${productId}`);
+    return reviews;
+  } catch (error) {
+    console.error(`Error fetching reviews for product #${productId}:`, error);
+    return [];
+  }
+}
